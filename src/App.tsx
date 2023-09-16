@@ -5,6 +5,7 @@ const App = () => {
   return (
     <div>
     <Navbar/>
+
       <LandingPage /> {/* Include the LandingPage component */}
     </div>
   );

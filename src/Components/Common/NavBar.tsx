@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // src/Components/Common/NavBar.tsx
 
 import AppBar from '@mui/material/AppBar';
@@ -214,3 +215,6 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+=======
+export {}
+>>>>>>> origin/sprint1
