@@ -1,0 +1,68 @@
+.ticketQueue {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+
+    width: 25rem;
+    height: 18.75rem;
+    flex-shrink: 0;
+    border-radius: 1rem;
+    border: 1px solid #E4E4E4;
+    background: #FFF;
+  }
+  
+  .modalLayout {
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .failTicket img
+  {
+    flex: 1 0 0;
+    align-self: stretch;
+    flex: 1 0 0;
+    align-self: stretch;
+  }
+
+  .failTicket h2{
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+
+  .failTicket button
+  {
+    display: flex;
+    width: 13.625rem;
+    height: 1.5625rem;
+    padding: 0.3125rem 1.25rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    flex-shrink: 0;
+    border: solid 0px;
+    border-radius: 0.3125rem;
+    background: #888888;
+  }
+
+  .failTicket button:hover
+  {
+    background: #616161;
+  }
+
+  .failTicket .button-home__text
+  {
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
