@@ -4,13 +4,11 @@ import "./ModalCSS/PayoutModal.css";
 
 interface Props {
   iconClose: string;
-  line: string;
   iconKeyboardArrow: string;
 }
 
 export const PayoutModal = ({
   iconClose = "icon-close.png",
-  line = "line-1.svg",
   iconKeyboardArrow = "icon-keyboard-arrow-down.png",
 }: Props): JSX.Element => {
   return (
@@ -23,7 +21,7 @@ export const PayoutModal = ({
               <div className="text-wrapper">ยอดเงินในบัญชี SafeTicket</div>
               <div className="text-wrapper-2">250.00 ₿</div>
             </div>
-            <img className="line" alt="Line" src={line} />
+            <hr className="line" />
             <div className="frame-3">
               <div className="text-wrapper-3">ถอนเงินจำนวน</div>
               <div className="group">

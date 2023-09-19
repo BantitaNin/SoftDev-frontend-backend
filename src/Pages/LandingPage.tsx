@@ -5,23 +5,23 @@ import { PayoutModal } from '../Components/Common/PopupModal/PayoutModal';
 
 const LandingPage = () => {
   return (
-    <div>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       {/* Landing Page content */}
-      <h1>this is naa web!!!!</h1>
-      <BalanceModal iconClose="../Components/Common/PopupModal/Pics/icon_close.svg" />
-      <br></br>
-      <TopupModal
-        iconClose="../PopupModal/Pics/icon_close.png"
-        line="line-1.svg"
-        iconKeyboardArrow="icon-keyboard-arrow-down.png"
-      />
-      <br></br>
-      <PayoutModal
-        iconClose="../PopupModal/Pics/icon_close.png"
-        line="line-1.svg"
-        iconKeyboardArrow="icon-keyboard-arrow-down.png"
-      />
-
+      <div>
+        <h1>Pop Up Modal</h1>
+        <BalanceModal iconClose="/Pics/icon_close.png" />
+        <br/>
+        <TopupModal
+          iconClose="/Pics/icon_close.png"
+          iconKeyboardArrow="/Pics/icon_keyboard_arrow_down.png"
+        />
+        <br/>
+        <PayoutModal
+          iconClose="/Pics/icon_close.png"
+          iconKeyboardArrow="/Pics/icon_keyboard_arrow_down.png"
+        />
+        <br/>
+      </div>
     </div>
   );
 };

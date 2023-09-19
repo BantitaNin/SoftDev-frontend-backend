@@ -6,7 +6,7 @@ interface Props {
   iconClose: string;
 }
 
-export const BalanceModal = ({ iconClose = "../PopupModal/Pics/icon_close.png" }: Props): JSX.Element => {
+export const BalanceModal = ({ iconClose = "icon-close.png" }: Props): JSX.Element => {
   return (
     <div className="balance-modal">
       <div className="overlap-group">
