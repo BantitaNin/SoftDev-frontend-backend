@@ -1,0 +1,43 @@
+.ticketQueue {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+
+    width: 25rem;
+    height: 18.75rem;
+    flex-shrink: 0;
+    border-radius: 1rem;
+    border: 1px solid #E4E4E4;
+    background: #FFF;
+  }
+  
+  .modalLayout {
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .waiting h2{
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+
+  .waiting .img-loading{
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
