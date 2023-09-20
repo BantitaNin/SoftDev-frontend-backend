@@ -1,10 +1,11 @@
 import React from 'react';
 import ConcertInfoPage from './Pages/ConcertInfoPage';
+import LandingPage from './Pages/LandingPage';
 
 const App = () => {
   return (
     <div>
-      <ConcertInfoPage /> {/* Include the LandingPage component */}
+      <LandingPage /> {/* Include the LandingPage component */}
     </div>
   );
 };
