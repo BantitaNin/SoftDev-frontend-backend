@@ -2,6 +2,7 @@ import React from 'react';
 import { BalanceModal } from '../Components/Common/PopupModal/BalanceModal'
 import { TopupModal } from '../Components/Common/PopupModal/TopupModal'
 import { PayoutModal } from '../Components/Common/PopupModal/PayoutModal';
+import { PayingModal } from '../Components/Common/PopupModal/PayingModal';
 
 const LandingPage = () => {
   return (
@@ -21,6 +22,9 @@ const LandingPage = () => {
           iconKeyboardArrow="/Pics/icon_keyboard_arrow_down.png"
         />
         <br/>
+        <PayingModal
+          iconClose='/Pics/icon_close.png'
+        />
       </div>
     </div>
   );
