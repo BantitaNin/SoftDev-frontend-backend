@@ -1,10 +1,10 @@
 import React from 'react';
 import LandingPage from './Pages/LandingPage';
-
+import Navbar from './Components/Common/NavBar'
 const App = () => {
   return (
     <div>
-      <h1>หน้าเว็ปปปปป</h1>
+    <Navbar/>
       <LandingPage /> {/* Include the LandingPage component */}
     </div>
   );
