@@ -1,0 +1,204 @@
+.topup-modal {
+    width: 417px;
+    margin: auto;
+  }
+  
+  .topup-modal .overlap {
+    background-color: #ffffff;
+    border: 1px solid;
+    border-color: #e4e4e4;
+    border-radius: 16px;
+    height: 442px;
+    position: absolute;
+    width: 419px;
+  }
+  
+  .topup-modal .frame {
+    align-items: flex-end;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 25px;
+    left: 34px;
+    position: relative;
+    top: 28px;
+  }
+  
+  .topup-modal .icon-close {
+    height: 24px;
+    position: relative;
+    width: 24px;
+  }
+  
+  .topup-modal .div {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 25px;
+    position: relative;
+  }
+  
+  .topup-modal .frame-2 {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
+  }
+  
+  .topup-modal .text-wrapper {
+    color: #000000;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 24px;
+    font-weight: 700;
+    height: 30px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    width: 338px;
+  }
+  
+  .topup-modal .text-wrapper-2 {
+    color: #000000;
+    font-family: "Inter-Medium", Helvetica;
+    font-size: 24px;
+    font-weight: 500;
+    height: 27px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    white-space: nowrap;
+    width: 338px;
+  }
+  
+  .topup-modal .line {
+    height: 1px;
+    object-fit: cover;
+    position: relative;
+    width: 345px;
+  }
+  
+  .topup-modal .frame-3 {
+    align-items: flex-start;
+    display: inline-flex;
+    flex-direction: column;
+    height: 74px;
+    justify-content: space-between;
+    position: relative;
+  }
+  
+  .topup-modal .text-wrapper-3 {
+    color: #000000;
+    font-family: "Inter-SemiBold", Helvetica;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    width: fit-content;
+  }
+  
+  .topup-modal .group {
+    height: 35px;
+    position: relative;
+    width: 349px;
+  }
+  
+  .topup-modal .overlap-group {
+    background-color: #ffffff;
+    border: 1px solid;
+    border-color: #9c9c9c;
+    border-radius: 5px;
+    height: 37px;
+    left: -1px;
+    position: relative;
+    top: -1px;
+    width: 351px;
+  }
+  
+  .topup-modal .frame-4 {
+    align-items: center;
+    display: inline-flex;
+    gap: 31px;
+    justify-content: center;
+    left: 20px;
+    position: relative;
+  }
+  
+  .topup-modal .text-wrapper-4 {
+    color: #000000;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    height: 35px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    opacity: 0.5;
+    position: relative;
+    width: 309px;
+  }
+  
+  .topup-modal .text-wrapper-5 {
+    color: #000000;
+    font-family: "Inter-SemiBold", Helvetica;
+    font-size: 18px;
+    font-weight: 600;
+    height: 30px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    width: 338px;
+  }
+  
+  .topup-modal .text-wrapper-6 {
+    color: #000000;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    height: 35px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    opacity: 0.5;
+    position: relative;
+    width: 258px;
+  }
+  
+  .topup-modal .icon-keyboard-arrow {
+    height: 12px;
+    position: relative;
+    width: 20.36px;
+  }
+  
+  .topup-modal .button {
+    all: unset;
+    align-items: center;
+    background-color: #ffa62b;
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: flex;
+    gap: 10px;
+    height: 25px;
+    justify-content: center;
+    padding: 5px 20px;
+    position: relative;
+    width: 349px;
+  }
+  
+  .topup-modal .text-wrapper-7 {
+    color: #ffffff;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+    width: fit-content;
+  }  

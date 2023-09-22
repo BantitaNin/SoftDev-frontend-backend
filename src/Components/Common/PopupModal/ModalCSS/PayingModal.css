@@ -1,0 +1,214 @@
+.paying-modal {
+    height: 440px;
+    width: 406px;
+    margin: auto;
+  }
+  
+.paying-modal .overlap {
+    background-color: #ffffff;
+    border: 1px solid;
+    border-color: #e4e4e4;
+    border-radius: 16px;
+    height: 442px;
+   
+    width: 419px;
+  }
+  
+.paying-modal .frame {
+    align-items: flex-end;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 25px;
+    left: 34px;
+    position: relative;
+    top: 28px;
+  }
+
+  .paying-modal .icon-close {
+    height: 24px;
+    position: relative;
+    width: 24px;
+  }
+  
+  .paying-modal .div {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 25px;
+    position: relative;
+  }
+  
+  .paying-modal .frame-2 {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
+  }
+  
+  .paying-modal .text-wrapper {
+    color: #000000;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 24px;
+    font-weight: 700;
+    height: 30px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    width: 338px;
+  }
+  
+  .paying-modal .text-wrapper-2 {
+    color: #000000;
+    font-family: "Inter-Medium", Helvetica;
+    font-size: 24px;
+    font-weight: 500;
+    height: 27px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    white-space: nowrap;
+    width: 338px;
+  }
+  
+  .paying-modal .line {
+    height: 1px;
+    object-fit: cover;
+    position: relative;
+    width: 345px;
+  }
+  .paying-modal .frame-3 {
+    display: flex;
+    width: 354px;
+    height: 174px;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .paying-modal .subframe-4 {
+    display: flex;
+    width: 200px;
+    height: 165px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    flex-shrink: 0;
+  }
+
+  .paying-modal .subframe-5 {
+    display: flex;
+    height: 165px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+.paying-modal .text-wrapper-3 {
+    display: flex;
+    width: 200px;
+    height: 30px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.paying-modal .text-wrapper-4 {
+    display: flex;
+    width: 200px;
+    height: 30px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+
+.paying-modal .text-wrapper-5 {
+    display: flex;
+    width: 150px;
+    height: 30px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.paying-modal .text-wrapper-6 {
+    display: flex;
+    width: 150px;
+    height: 30px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+
+
+.paying-modal .text-wrapper-7 {
+    display: flex;
+    width: 150px;
+    height: 30px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+
+.paying-modal .button {
+    all: unset;
+    align-items: center;
+    background-color: #FFA62B;
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: flex;
+    gap: 10px;
+    height: 25px;
+    justify-content: center;
+    padding: 5px 20px;
+    position: relative;
+    width: 349px;
+  }
+  
+  .paying-modal .text-wrapper-8 {
+    color: #ffffff;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+    width: fit-content;
+  }
+
+
