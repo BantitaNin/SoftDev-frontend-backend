@@ -1,6 +1,8 @@
 .topup-modal {
-    height: 440px;
+
     width: 417px;
+    margin: auto;
+
   }
   
   .topup-modal .overlap {
@@ -9,9 +11,9 @@
     border-color: #e4e4e4;
     border-radius: 16px;
     height: 442px;
-    left: -1px;
-    position: relative;
-    top: -1px;
+
+    position: absolute;
+
     width: 419px;
   }
   
