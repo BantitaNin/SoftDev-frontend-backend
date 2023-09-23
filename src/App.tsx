@@ -1,20 +1,19 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ConcertInfoPage from './Pages/ConcertInfoPage';
 import LoadingPage from './Pages/LoadingPage';
 import Navbar from './Components/Common/NavBar';
 import LandingPage from './Pages/LandingPage';
 
-
-const App = () => {
+const App: React.FC = () => {
   return (
-    <div>
-
-      {/* <ConcertInfoPage /> */}
+    <Router>
       <Navbar/>
-      {/* <LoadingPage /> */}
-      <LandingPage /> Include the LandingPage component
-
-    </div>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/concert-info" element={<ConcertInfoPage />} />
+      </Routes>
+    </Router>
   );
 };
 
