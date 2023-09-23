@@ -1,8 +1,10 @@
 .balance-modal {
     height: 185px;
     width: 417px;
+
     margin-left: auto;
     margin-right: 180px;
+
   }
   
   .balance-modal .overlap-group {
@@ -11,8 +13,10 @@
     border-color: #e4e4e4;
     border-radius: 16px;
     height: 187px;
+
    position: absolute;
   
+
     width: 419px;
   }
   
@@ -22,6 +26,8 @@
     flex-direction: column;
     gap: 10px;
     height: 152px;
+
+
     top: 16px;
     width: 384px;
   }
@@ -38,9 +44,11 @@
     flex-direction: column;
     height: 118px;
     justify-content: space-between;
+
     margin-left: auto;
     width: 384px;
     
+
   }
   
   .balance-modal .frame-2 {
@@ -50,7 +58,9 @@
     flex-direction: column;
     gap: 10px;
     justify-content: center;
+
     margin-left: auto;
+
   }
   
   .balance-modal .text-wrapper {
@@ -88,6 +98,7 @@
     position: relative;
     width: 350px;
     margin-left: auto;
+
   }
   
   .balance-modal .button {

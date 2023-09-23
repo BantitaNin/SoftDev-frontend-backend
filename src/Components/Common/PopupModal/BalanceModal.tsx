@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+
 import React, { useState } from 'react';
 import "./ModalCSS/BalanceModal.css";
 import { TopupModal } from "./TopupModal";
@@ -49,6 +50,8 @@ export const BalanceModal = ({ iconClose = "Pics/icon-close.svg",  }: Props): JS
     iconKeyboardArrow = "icon-keyboard-arrow-down.png"/>
    )}
    </>
+
+
   );
 };
 
