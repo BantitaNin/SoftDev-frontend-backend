@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ConcertInfoPage from './Pages/ConcertInfoPage';
 import LoadingPage from './Pages/LoadingPage';
 import LandingPage from './Pages/LandingPage';
+import Navbar from './Components/Common/NavBar'
 
 const App: React.FC = () => {
   return (
