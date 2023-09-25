@@ -1,6 +1,6 @@
 import React from 'react';
 import SadeSVG from '../SVG/SadVector.svg';
-
+import { Link } from 'react-router-dom';
 import './FailTicketComponent.css';
 
 interface LoadingComponentProps {
@@ -17,9 +17,11 @@ const FailTicketComponent: React.FC<LoadingComponentProps> = ({ isLoading }) => 
             <img src={SadeSVG} alt='Smile SVG' />
             <h2>เสียใจด้วย บัตรหมดแล้ว</h2>
             <button className='button-home'>
+              <Link to="/">
                 <div className='button-home__text'>
-                กลับไปหน้าหลัก
+                  กลับไปหน้าหลัก
                 </div>
+              </Link>
             </button>
           </div>
           

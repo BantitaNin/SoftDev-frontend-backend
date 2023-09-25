@@ -9,7 +9,7 @@ const LandingPage: React.FC = () => {
     alignItems: 'center',
     gap: '80px',
     color: 'white',
-    marginTop: '100px',
+    marginTop: '50px',
   };
 
   const Concertticketdiv: React.CSSProperties = {

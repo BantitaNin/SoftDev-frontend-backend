@@ -10,6 +10,8 @@ import LoginModal from './PopupModal/LoginModal';
 import TicketBagModal from './PopupModal/TicketBagModal';
 import NotiList from './PopupModal/NotiList';
 import { BalanceModal } from './PopupModal/BalanceModal';
+import { Link } from 'react-router-dom';
+
 const Navbar: React.FC = () => {
   const appBarStyle: React.CSSProperties = {
     backgroundColor: 'white',
@@ -60,14 +62,16 @@ const Navbar: React.FC = () => {
 
   const modalContentStyle: React.CSSProperties = {
     backgroundColor: 'white',
-    padding: '20px', // Adjust the padding as needed
-    borderRadius: '8px', // Rounded corners for the container
+    padding: '20px',
+    borderRadius: '8px',
     width: '400px',
     height: '300px',
-    justifyContent: 'center', // Center horizontally
-    alignItems: 'center', 
-    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', // Add a shadow for depth
+    justifyContent: 'center',
+    alignItems: 'center',
+    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
+    zIndex: 1000, // เพิ่ม z-index เพื่อทำให้ BalanceModal อยู่ด้านหน้า
   };
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
   const [isModalTkBagOpen, setIsModalTkBagOpen] = useState(false);
@@ -86,6 +90,7 @@ const Navbar: React.FC = () => {
     setIsModalTkBagOpen(false);
     setisBalanceModalVisible(false);
   };
+  
   const handleLogin = () => {
     setIsLoggedIn(true);
     setIsModalLoginOpen(false);
@@ -100,10 +105,9 @@ const Navbar: React.FC = () => {
   const handleNonotiClick = () => {
     setDropdownVisible(false);
   };
-  const handleBalanceModal = () =>{
-    setisBalanceModalVisible(!isBalanceModalVisible);
-  }
-
+  const handleBalanceModal = () => {
+    setisBalanceModalVisible(true);
+  };
  
   const modalinfo: React.CSSProperties = {
     
@@ -124,15 +128,14 @@ const Navbar: React.FC = () => {
     width: '480px',
     height: '650px',
     borderRadius: '8px',
-border: '1px solid #E4E4E4',
-background: '#FFF',
-right: '0', // Position the dropdown at the right side
-top: '40px',
-zIndex: 999, 
-position: 'absolute',
- 
-overflowY: 'auto'
-
+    border: '1px solid #E4E4E4',
+    background: '#FFF',
+    right: '0', // Position the dropdown at the right side
+    top: '40px',
+    zIndex: 999, 
+    position: 'absolute',
+    
+    overflowY: 'auto'
   };
 
 
@@ -140,23 +143,24 @@ overflowY: 'auto'
     <AppBar position="static" style={appBarStyle}>
 
       <Toolbar>
-
-        <IconButton edge="start" color="inherit">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" style={svgStyle}>
-            <path d="M13.3335 25.3333V18.6666H18.6668V25.3333C18.6668 26.0666 19.2668 26.6666 20.0001 26.6666H24.0001C24.7335 26.6666 25.3335 26.0666 25.3335 25.3333V16H27.6001C28.2135 16 28.5068 15.24 28.0401 14.84L16.8935 4.79996C16.3868 4.34663 15.6135 4.34663 15.1068 4.79996L3.96013 14.84C3.5068 15.24 3.7868 16 4.40013 16H6.6668V25.3333C6.6668 26.0666 7.2668 26.6666 8.00013 26.6666H12.0001C12.7335 26.6666 13.3335 26.0666 13.3335 25.3333Z" fill="black" />
-          </svg>
-        </IconButton>
+        <Link to="/">
+          <IconButton edge="start" color="inherit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" style={svgStyle}>
+              <path d="M13.3335 25.3333V18.6666H18.6668V25.3333C18.6668 26.0666 19.2668 26.6666 20.0001 26.6666H24.0001C24.7335 26.6666 25.3335 26.0666 25.3335 25.3333V16H27.6001C28.2135 16 28.5068 15.24 28.0401 14.84L16.8935 4.79996C16.3868 4.34663 15.6135 4.34663 15.1068 4.79996L3.96013 14.84C3.5068 15.24 3.7868 16 4.40013 16H6.6668V25.3333C6.6668 26.0666 7.2668 26.6666 8.00013 26.6666H12.0001C12.7335 26.6666 13.3335 26.0666 13.3335 25.3333Z" fill="black" />
+            </svg>
+          </IconButton>
+        </Link>
         <div style={Groupstyle}>
         {isLoggedIn ? (
             /* When logged in, display these icons */
             <>
-              <IconButton style={iconStyle} onClick={handleBalanceModal} >
+          <IconButton style={iconStyle} onClick={handleBalanceModal}>
 
-          <svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32" fill="none">
-            <rect width="57" height="32" rx="16" fill="#EEEEEE"/>
-            <path d="M39.5 10.4933V7.83333C39.5 6.55 38.45 5.5 37.1667 5.5H20.8333C19.5383 5.5 18.5 6.55 18.5 7.83333V24.1667C18.5 25.45 19.5383 26.5 20.8333 26.5H37.1667C38.45 26.5 39.5 25.45 39.5 24.1667V21.5067C40.1883 21.0983 40.6667 20.3633 40.6667 19.5V12.5C40.6667 11.6367 40.1883 10.9017 39.5 10.4933ZM38.3333 12.5V19.5H30.1667V12.5H38.3333ZM20.8333 24.1667V7.83333H37.1667V10.1667H30.1667C28.8833 10.1667 27.8333 11.2167 27.8333 12.5V19.5C27.8333 20.7833 28.8833 21.8333 30.1667 21.8333H37.1667V24.1667H20.8333Z" fill="black"/>
-            <path d="M33.667 17.75C34.6335 17.75 35.417 16.9665 35.417 16C35.417 15.0335 34.6335 14.25 33.667 14.25C32.7005 14.25 31.917 15.0335 31.917 16C31.917 16.9665 32.7005 17.75 33.667 17.75Z" fill="black"/>
-          </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32" fill="none">
+              <rect width="57" height="32" rx="16" fill="#EEEEEE"/>
+              <path d="M39.5 10.4933V7.83333C39.5 6.55 38.45 5.5 37.1667 5.5H20.8333C19.5383 5.5 18.5 6.55 18.5 7.83333V24.1667C18.5 25.45 19.5383 26.5 20.8333 26.5H37.1667C38.45 26.5 39.5 25.45 39.5 24.1667V21.5067C40.1883 21.0983 40.6667 20.3633 40.6667 19.5V12.5C40.6667 11.6367 40.1883 10.9017 39.5 10.4933ZM38.3333 12.5V19.5H30.1667V12.5H38.3333ZM20.8333 24.1667V7.83333H37.1667V10.1667H30.1667C28.8833 10.1667 27.8333 11.2167 27.8333 12.5V19.5C27.8333 20.7833 28.8833 21.8333 30.1667 21.8333H37.1667V24.1667H20.8333Z" fill="black"/>
+              <path d="M33.667 17.75C34.6335 17.75 35.417 16.9665 35.417 16C35.417 15.0335 34.6335 14.25 33.667 14.25C32.7005 14.25 31.917 15.0335 31.917 16C31.917 16.9665 32.7005 17.75 33.667 17.75Z" fill="black"/>
+            </svg>
 
           </IconButton>
           <IconButton style={iconStyle} onClick={handleTkBagClickOpen} >
@@ -189,6 +193,7 @@ overflowY: 'auto'
             <> <IconButton style={loginButtonStyle} onClick={handleLoginClickOpen} >
             <Typography>Login</Typography>
           </IconButton>
+
 
            <IconButton style={iconStyle} >
            <svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32" fill="none">
@@ -230,12 +235,14 @@ overflowY: 'auto'
         </div>
        
       )}
-      {isBalanceModalVisible &&(
-        <BalanceModal iconClose='Pics/icon_close.svg'  />
+      {isBalanceModalVisible && (
+        <BalanceModal
+        iconClose="Pics/icon_close.png"
+        handleModalClose={handleModalClose} // ตรวจสอบว่าส่งฟังก์ชันนี้ไปยัง BalanceModal หรือไม่
+        />
       )}
     </>
   );
 };
 
 export default Navbar;
-
