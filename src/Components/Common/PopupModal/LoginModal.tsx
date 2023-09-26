@@ -1,6 +1,6 @@
 // src/Components/Common/LoginModal.tsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 
 const LoginModal: React.FC<{
@@ -9,7 +9,7 @@ const LoginModal: React.FC<{
   modalinfo: React.CSSProperties;
   contentstyle: React.CSSProperties;
   handleModalClose: () => void;
-  handleLogin: () => void;
+  handleLogin: (email: string, password: string) => void;
 }> = ({
   modalOverlayStyle,
   modalContentStyle,
@@ -17,7 +17,27 @@ const LoginModal: React.FC<{
   contentstyle,
   handleModalClose,
   handleLogin,
+  
 }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // Update state when input values change
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  // Handle the login button click
+  const handleLoginClick = () => {
+    // Call the handleLogin function with email and password
+    handleLogin(email, password);
+
+    // Close the modal or handle other UI changes as needed
+  };
   return (
     <div style={modalOverlayStyle}>
       <div style={modalContentStyle}>
@@ -49,13 +69,13 @@ const LoginModal: React.FC<{
             <Typography fontSize={'20px'} fontWeight={'bold'} marginTop={'15px'}>
               Email
             </Typography>
-            <input type="text" style={{ width: '296px', marginTop: '5px', height: '25px', borderRadius: '8px' }} />
+            <input type="text"value={email} onChange={handleEmailChange} style={{ width: '296px', marginTop: '5px', height: '25px', borderRadius: '8px' }} />
             <Typography fontSize={'20px'} fontWeight={'bold'} marginTop={'10px'}>
               Password
             </Typography>
-            <input type="text" style={{ width: '296px', marginTop: '5px', height: '25px', borderRadius: '8px' }} />
-            <button
-              onClick={handleLogin}
+            <input type="text"   value={password}  onChange={handlePasswordChange} style={{ width: '296px', marginTop: '5px', height: '25px', borderRadius: '8px' }} />
+            <button 
+              onClick={handleLoginClick}
               style={{
                 backgroundColor: 'black',
                 width: '306px',
@@ -63,7 +83,9 @@ const LoginModal: React.FC<{
                 marginTop: '20px',
                 height: '35px',
                 color: 'white',
+                cursor:  'pointer' ,
               }}
+             
             >
               Login
             </button>

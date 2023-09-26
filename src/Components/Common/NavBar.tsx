@@ -11,8 +11,79 @@ import TicketBagModal from './PopupModal/TicketBagModal';
 import NotiList from './PopupModal/NotiList';
 import { BalanceModal } from './PopupModal/BalanceModal';
 import { Link } from 'react-router-dom';
+import axios, { AxiosResponse } from 'axios';
 
 const Navbar: React.FC = () => {
+  
+const [isLoggedInUser, setIsLoggedInUser] = useState(false);
+const [isLoggedInWorker, setIsLoggedInWorker] = useState(false);
+const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
+const [isModalTkBagOpen, setIsModalTkBagOpen] = useState(false);
+const [isDropdownVisible, setDropdownVisible] = useState(false);
+const [isBalanceModalVisible, setisBalanceModalVisible] = useState(false);
+
+const handleLoginClickOpen = () => {
+  setIsModalLoginOpen(true);
+};
+const handleTkBagClickOpen = () => {
+  setIsModalTkBagOpen(true);
+};
+
+const handleModalClose = () => {
+  setIsModalLoginOpen(false);
+  setIsModalTkBagOpen(false);
+  setisBalanceModalVisible(false);
+};
+
+
+
+const handleLogout = () => {
+  setIsLoggedInUser(false);
+  setIsLoggedInWorker(false);
+};
+const handlenotiClick = () => {
+  setDropdownVisible(true);
+};
+const handleNonotiClick = () => {
+  setDropdownVisible(false);
+};
+const handleBalanceModal = () => {
+  setisBalanceModalVisible(true);
+};
+const handleLogin = async () => {
+  console.log("Login Is clicked");
+  const requestBody = {
+    username: 'test3',
+    password: 'test3ssaa',
+  };
+
+  try {
+    const response: AxiosResponse<LoginResponse> = await axios.post<LoginResponse>(
+      'https://cors-anywhere.herokuapp.com/https://project-4jnx78qgj-shidkung.vercel.app/auth/login',
+      requestBody
+    );
+
+    // Handle the successful login response
+    const { access_token, role } = response.data;
+    console.log('Logged in user:', access_token);
+    console.log('role:', role);
+     if(role =="user"){
+         setIsLoggedInUser(true);
+         setIsModalLoginOpen(false);
+     }else{
+      setIsLoggedInWorker(true);
+      setIsModalLoginOpen(false);
+     }
+    // You can also perform actions such as setting the user's token in state or redirecting the user to another page
+  } catch (error) {
+    // Handle login errors
+    console.error('Login error:', error);
+  }
+};
+interface LoginResponse {
+  access_token: string;
+  role: string;
+}
   const appBarStyle: React.CSSProperties = {
     backgroundColor: 'white',
     height: '40px',
@@ -72,42 +143,6 @@ const Navbar: React.FC = () => {
     zIndex: 1000, // เพิ่ม z-index เพื่อทำให้ BalanceModal อยู่ด้านหน้า
   };
   
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
-  const [isModalTkBagOpen, setIsModalTkBagOpen] = useState(false);
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const [isBalanceModalVisible, setisBalanceModalVisible] = useState(false);
-  
-  const handleLoginClickOpen = () => {
-    setIsModalLoginOpen(true);
-  };
-  const handleTkBagClickOpen = () => {
-    setIsModalTkBagOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalLoginOpen(false);
-    setIsModalTkBagOpen(false);
-    setisBalanceModalVisible(false);
-  };
-  
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    setIsModalLoginOpen(false);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
-  const handlenotiClick = () => {
-    setDropdownVisible(true);
-  };
-  const handleNonotiClick = () => {
-    setDropdownVisible(false);
-  };
-  const handleBalanceModal = () => {
-    setisBalanceModalVisible(true);
-  };
  
   const modalinfo: React.CSSProperties = {
     
@@ -151,7 +186,7 @@ const Navbar: React.FC = () => {
           </IconButton>
         </Link>
         <div style={Groupstyle}>
-        {isLoggedIn ? (
+        {isLoggedInUser ? (
             /* When logged in, display these icons */
             <>
           <IconButton style={iconStyle} onClick={handleBalanceModal}>
@@ -189,7 +224,38 @@ const Navbar: React.FC = () => {
            </svg>
          </IconButton>
             </>
-          ) : (
+          ) :  isLoggedInWorker ? (
+            /* When logged in, display these icons */
+            <>
+          <IconButton style={iconStyle} onClick={handleBalanceModal}>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32" fill="none">
+              <rect width="57" height="32" rx="16" fill="#EEEEEE"/>
+              <path d="M39.5 10.4933V7.83333C39.5 6.55 38.45 5.5 37.1667 5.5H20.8333C19.5383 5.5 18.5 6.55 18.5 7.83333V24.1667C18.5 25.45 19.5383 26.5 20.8333 26.5H37.1667C38.45 26.5 39.5 25.45 39.5 24.1667V21.5067C40.1883 21.0983 40.6667 20.3633 40.6667 19.5V12.5C40.6667 11.6367 40.1883 10.9017 39.5 10.4933ZM38.3333 12.5V19.5H30.1667V12.5H38.3333ZM20.8333 24.1667V7.83333H37.1667V10.1667H30.1667C28.8833 10.1667 27.8333 11.2167 27.8333 12.5V19.5C27.8333 20.7833 28.8833 21.8333 30.1667 21.8333H37.1667V24.1667H20.8333Z" fill="black"/>
+              <path d="M33.667 17.75C34.6335 17.75 35.417 16.9665 35.417 16C35.417 15.0335 34.6335 14.25 33.667 14.25C32.7005 14.25 31.917 15.0335 31.917 16C31.917 16.9665 32.7005 17.75 33.667 17.75Z" fill="black"/>
+            </svg>
+
+          </IconButton>
+         
+          <IconButton style={iconStyle} onMouseEnter={handlenotiClick} onMouseLeave={handleNonotiClick} >
+
+          <svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32" fill="none">
+            <rect width="57" height="32" rx="16" fill="#EEEEEE"/>
+            <path d="M29.0003 27.6666C30.2837 27.6666 31.3337 26.6166 31.3337 25.3333H26.667C26.667 26.6166 27.717 27.6666 29.0003 27.6666ZM36.0003 20.6666V14.8333C36.0003 11.2516 34.0987 8.25329 30.7503 7.45996V6.66663C30.7503 5.69829 29.9687 4.91663 29.0003 4.91663C28.032 4.91663 27.2503 5.69829 27.2503 6.66663V7.45996C23.9137 8.25329 22.0003 11.24 22.0003 14.8333V20.6666L19.667 23V24.1666H38.3337V23L36.0003 20.6666ZM33.667 21.8333H24.3337V14.8333C24.3337 11.94 26.0953 9.58329 29.0003 9.58329C31.9053 9.58329 33.667 11.94 33.667 14.8333V21.8333Z" fill="black"/>
+          </svg>
+
+          </IconButton>
+              <IconButton style={loginButtonStyle} onClick={handleLogout}>
+                <Typography>Logout</Typography>
+              </IconButton>
+              <IconButton style={iconStyle} >
+           <svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32" fill="none">
+             <rect width="57" height="32" rx="16" fill="#EEEEEE" />
+             <path d="M19.125 22.75H37.875V20.6667H19.125V22.75ZM19.125 17.5417H37.875V15.4583H19.125V17.5417ZM19.125 10.25V12.3333H37.875V10.25H19.125Z" fill="black" />
+           </svg>
+         </IconButton>
+            </>
+          ) :(
             <> <IconButton style={loginButtonStyle} onClick={handleLoginClickOpen} >
             <Typography>Login</Typography>
           </IconButton>
@@ -204,6 +270,7 @@ const Navbar: React.FC = () => {
             /* When not logged in, display the "Login" button */
            
           )}
+          
           </div>
       
       </Toolbar>

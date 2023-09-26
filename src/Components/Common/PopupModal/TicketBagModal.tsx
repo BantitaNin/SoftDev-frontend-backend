@@ -45,11 +45,17 @@ const TicketBagModal: React.FC<{
         <div key={index}  >
         <div id = "block" style={{marginTop: '10px',display: 'flex',height: '117px',padding: '7px 16px',justifyContent: 'center',alignItems: 'center',gap: '13px',alignSelf: 'stretch', borderRadius: '5px', border:'1px solid rgba(0, 0, 0, 0.25)', }}>
                     <div id="image"style={{width:'120px', height:'90px', borderRadius:'12px', background: '#FFA62B'}}></div>
-                             <div id = "info" style={{margin: 'auto'}}> 
-                                    <Typography fontSize={"24px"}>BTS concert Ticket</Typography>
-                                    <Typography fontSize={"12px"}>จัดที่นั่นโน่นนี่,นี่โน่นนั่น</Typography>
-                                    <Typography fontSize={"12px"}>วันที่ : DD / MM / YY</Typography>
-                                    <Typography fontSize={"12px"}>ที่นั่ง : YY0011</Typography>
+                             <div id = "info" > 
+                                    <Typography fontSize={"24px"}>BTS concert Ticket 
+                                    <Typography fontSize={"12px"}>จัดที่นั่นโน่นนี่,นี่โน่นนั่น
+                                     <Typography fontSize={"12px"}>ที่นั่ง : YY0011
+                                     </Typography><Typography fontSize={"12px"}>วันที่ : DD / MM / YY
+                                     </Typography>
+                                     </Typography>
+                                     </Typography>
+                                    
+                                   
+                                    
                              </div>
                     </div>
           

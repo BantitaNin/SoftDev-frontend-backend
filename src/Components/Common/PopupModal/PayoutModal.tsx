@@ -5,11 +5,14 @@ import "./ModalCSS/PayoutModal.css";
 interface Props {
   iconClose: string;
   iconKeyboardArrow: string;
+ 
+  
 }
 
 export const PayoutModal = ({
   iconClose = "icon-close.png",
   iconKeyboardArrow = "icon-keyboard-arrow-down.png",
+ 
 }: Props): JSX.Element => {
   return (
     <div className="payout-modal">
