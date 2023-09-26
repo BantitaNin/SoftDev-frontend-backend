@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 
 const LandingPage: React.FC = () => {
@@ -61,16 +62,17 @@ const LandingPage: React.FC = () => {
 
   // Generate Listpic elements
   const listPics = Array.from({ length: 12 }, (_, index) => (
-    <div key={index} style={Listpic}>
-      <img src="https://www.w3schools.com/tags/img_girl.jpg" alt="Girl in a jacket" width="230" height="250s"></img>
-      <div style={information}>
-      <Typography color={'black'} fontWeight={'bold'}>Concert ticket</Typography>
-      <Typography color={'black'} fontSize={'15px'}>Concert xhdius iosjidjsiodjsd </Typography>
-      <Typography color={'black'} fontWeight={'bold'} fontSize={'12px'} marginTop={'5px'}>Concert ticket</Typography></div>
-      
-    </div>
+    <Link key={index} to="/concert-info"> {/* เปลี่ยนไปยังหน้า ConcertInfoPage */}
+      <div key={index} style={Listpic}>
+        <img src="https://www.w3schools.com/tags/img_girl.jpg" alt="Girl in a jacket" width="230" height="250s"></img>
+        <div style={information}>
+        <Typography color={'black'} fontWeight={'bold'}>Concert ticket</Typography>
+        <Typography color={'black'} fontSize={'15px'}>Concert xhdius iosjidjsiodjsd </Typography>
+        <Typography color={'black'} fontWeight={'bold'} fontSize={'12px'} marginTop={'5px'}>Concert ticket</Typography></div>
+      </div>
+    </Link>
   ));
-
+  
   return (
     <>
       <div style={Headdiv}>
