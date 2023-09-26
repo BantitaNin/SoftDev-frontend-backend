@@ -50,11 +50,11 @@ const handleNonotiClick = () => {
 const handleBalanceModal = () => {
   setisBalanceModalVisible(true);
 };
-const handleLogin = async () => {
+const handleLogin = async (username: string, password: string) => {
   console.log("Login Is clicked");
   const requestBody = {
-    username: 'test3',
-    password: 'test3ssaa',
+    username: username,
+    password: password,
   };
 
   try {

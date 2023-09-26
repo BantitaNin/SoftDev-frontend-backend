@@ -9,7 +9,7 @@ const LoginModal: React.FC<{
   modalinfo: React.CSSProperties;
   contentstyle: React.CSSProperties;
   handleModalClose: () => void;
-  handleLogin: (email: string, password: string) => void;
+  handleLogin: (username: string, password: string) => void;
 }> = ({
   modalOverlayStyle,
   modalContentStyle,
@@ -19,7 +19,7 @@ const LoginModal: React.FC<{
   handleLogin,
   
 }) => {
-  const [email, setEmail] = useState('');
+  const [username, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   // Update state when input values change
@@ -34,7 +34,7 @@ const LoginModal: React.FC<{
   // Handle the login button click
   const handleLoginClick = () => {
     // Call the handleLogin function with email and password
-    handleLogin(email, password);
+    handleLogin(username, password);
 
     // Close the modal or handle other UI changes as needed
   };
@@ -69,7 +69,7 @@ const LoginModal: React.FC<{
             <Typography fontSize={'20px'} fontWeight={'bold'} marginTop={'15px'}>
               Email
             </Typography>
-            <input type="text"value={email} onChange={handleEmailChange} style={{ width: '296px', marginTop: '5px', height: '25px', borderRadius: '8px' }} />
+            <input type="text"value={username} onChange={handleEmailChange} style={{ width: '296px', marginTop: '5px', height: '25px', borderRadius: '8px' }} />
             <Typography fontSize={'20px'} fontWeight={'bold'} marginTop={'10px'}>
               Password
             </Typography>
