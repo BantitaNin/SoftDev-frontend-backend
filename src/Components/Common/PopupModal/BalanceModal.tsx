@@ -3,16 +3,20 @@ import React, { useState } from 'react';
 import "./ModalCSS/BalanceModal.css";
 import { TopupModal } from "./TopupModal";
 import { PayoutModal } from "./PayoutModal";
-
+import axios, { AxiosResponse } from 'axios';
 interface Props {
   iconClose: string;
   handleModalClose: () => void;
+  user_id: string;
+  Balance: number;
 }
 
-export const BalanceModal = ({ iconClose, handleModalClose }: Props): JSX.Element => {
+export const BalanceModal = ({ iconClose, handleModalClose , user_id, Balance}: Props): JSX.Element => {
+  console.log("user_id in BalanceModal:", user_id);
   const [isTopupModalclick, setisTopupModalclick] = useState(false);
   const [isPayoutModalclick, setPayoutModalclick] = useState(false);
-
+  
+  
   const handleTopup = () => {
     setisTopupModalclick(!isTopupModalclick);
   };
@@ -34,7 +38,7 @@ export const BalanceModal = ({ iconClose, handleModalClose }: Props): JSX.Elemen
             <div className="div">
               <div className="frame-2">
                 <div className="text-wrapper">ยอดเงินในบัญชี SafeTicket</div>
-                <div className="text-wrapper-2">250.00 ₿</div>
+                <div className="text-wrapper-2">{Balance === 0 ? 'Loading' : Balance.toFixed(2) + " ₿"}</div>
               </div>
               <div className="frame-3">
                 <button className="button" onClick={handleTopup}>

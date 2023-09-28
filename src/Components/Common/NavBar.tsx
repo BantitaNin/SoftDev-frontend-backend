@@ -21,12 +21,16 @@ const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
 const [isModalTkBagOpen, setIsModalTkBagOpen] = useState(false);
 const [isDropdownVisible, setDropdownVisible] = useState(false);
 const [isBalanceModalVisible, setisBalanceModalVisible] = useState(false);
+const [user_id, setUser_id] = useState<string>('');
+const [showBalance, setShowBalance] = useState(0);
+
 
 const handleLoginClickOpen = () => {
   setIsModalLoginOpen(true);
 };
 const handleTkBagClickOpen = () => {
   setIsModalTkBagOpen(true);
+  TicketList();
 };
 
 const handleModalClose = () => {
@@ -49,7 +53,11 @@ const handleNonotiClick = () => {
 };
 const handleBalanceModal = () => {
   setisBalanceModalVisible(true);
+  BalanceCheck();
 };
+
+
+
 const handleLogin = async (username: string, password: string) => {
   console.log("Login Is clicked");
   const requestBody = {
@@ -59,15 +67,17 @@ const handleLogin = async (username: string, password: string) => {
 
   try {
     const response: AxiosResponse<LoginResponse> = await axios.post<LoginResponse>(
-      'https://cors-anywhere.herokuapp.com/https://project-4jnx78qgj-shidkung.vercel.app/auth/login',
+      'https://cors-anywhere.herokuapp.com/https://project-ex56b38hg-shidkung.vercel.app/auth/login',
       requestBody
     );
 
     // Handle the successful login response
-    const { access_token, role } = response.data;
+    const { access_token, role , user_id } = response.data;
     console.log('Logged in user:', access_token);
     console.log('role:', role);
-     if(role =="user"){
+    console.log('user_id:', user_id);
+    setUser_id(user_id); 
+     if(role ==="user"){
          setIsLoggedInUser(true);
          setIsModalLoginOpen(false);
      }else{
@@ -80,10 +90,83 @@ const handleLogin = async (username: string, password: string) => {
     console.error('Login error:', error);
   }
 };
+
 interface LoginResponse {
   access_token: string;
   role: string;
+  user_id : string;
 }
+
+
+
+
+
+const BalanceCheck = async () => {
+  console.log("Balance is showed");
+  const requestBody = {
+    id: Number(user_id),
+  };
+
+
+  try {
+    const response: AxiosResponse<BalanceRespons> = await axios.post<BalanceRespons>(
+      'https://cors-anywhere.herokuapp.com/https://project-ex56b38hg-shidkung.vercel.app/Ticketpay/getTicket',
+     requestBody
+    );
+
+    // Handle the successful login response
+    const {Ticketpay } = response.data;
+    console.log('Balance:', Ticketpay);
+   setShowBalance(Ticketpay);
+    
+    // You can also perform actions such as setting the user's token in state or redirecting the user to another page
+  } catch (error) {
+    // Handle login errors
+    console.error('Login error:', error);
+  }
+};
+
+
+
+interface BalanceRespons {
+  Ticketpay: number;
+  
+}
+
+
+const TicketList = async () => {
+  console.log("Ticket list is being fetched");
+  const requestBody = {
+    id: Number(user_id),
+  };
+
+  try {
+    const response = await axios.post(
+      'https://cors-anywhere.herokuapp.com/https://project-ex56b38hg-shidkung.vercel.app/concerts/Ticket_id',
+      requestBody
+    );
+
+    // Check if the response status is OK (200)
+    
+      const [ticketList, countingNumber] = response.data;
+
+      // Process the ticket list
+      console.log('Ticket List:', ticketList);
+
+      // Process the counting number
+      console.log('Counting Number:', countingNumber);
+
+      // You can also perform actions such as setting the user's token in state or redirecting the user to another page
+   
+  } catch (error) {
+    // Handle errors
+    console.error('TicketList error:', error);
+  }
+};
+
+
+
+
   const appBarStyle: React.CSSProperties = {
     backgroundColor: 'white',
     height: '40px',
@@ -305,7 +388,9 @@ interface LoginResponse {
       {isBalanceModalVisible && (
         <BalanceModal
         iconClose="Pics/icon_close.png"
+        user_id={user_id} 
         handleModalClose={handleModalClose} // ตรวจสอบว่าส่งฟังก์ชันนี้ไปยัง BalanceModal หรือไม่
+        Balance = {showBalance}
         />
       )}
     </>
