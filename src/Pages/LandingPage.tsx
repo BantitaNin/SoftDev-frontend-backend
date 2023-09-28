@@ -61,22 +61,16 @@ const LandingPage: React.FC = () => {
     overflow: 'hidden',
   };
 
-<<<<<<< Updated upstream
 
-  ///////////////////////////////////////////////////////////////////////////
   
-  // ขั้นตอนส่ง request 
 
-=======
-  
->>>>>>> Stashed changes
   const [concertData, setData] = useState<EventData[]>([]);
 
   useEffect(() => {
     // สร้างฟังก์ชัน async เพื่อรับข้อมูลจาก API
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/concerts');
+        const response = await fetch('https://project-ex56b38hg-shidkung.vercel.app/concerts');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

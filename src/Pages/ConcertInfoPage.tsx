@@ -18,7 +18,7 @@ const ConcertInfoPage = () => {
     // สร้างฟังก์ชัน async เพื่อรับข้อมูลจาก API
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/concerts');         // <--------------------------- เปลี่ยนใส่ API ของคิดดดดดดดดดดดดดดดดดดดดดดดดด
+        const response = await fetch('https://project-ex56b38hg-shidkung.vercel.app/concerts');         // <--------------------------- เปลี่ยนใส่ API ของคิดดดดดดดดดดดดดดดดดดดดดดดดด
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -48,7 +48,7 @@ const selectedConcert = concertData.find(concert => concert.id === concertId);
                     <img id="concertPic" src={selectedConcert?.PhotoUrl} alt="">
                     </img>
                     <div className="container" id="ticketLine">
-                        <h2 id="concertTicket">ขายบัตรวันที่ 16 มิถุนายน เวลา 10.00-22.00</h2>
+                        <h2 id="concertTicket">{selectedConcert?.Start}</h2>
                         <Link to="/loading">
                             <button type="button" id="btn1">GET TICKETS</button>
                         </Link>
