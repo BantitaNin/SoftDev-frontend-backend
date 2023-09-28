@@ -132,7 +132,8 @@ interface BalanceRespons {
   Ticketpay: number;
   
 }
-
+const [ticketList, setTicketList] = useState([]);
+  const [countingNumber, setCountingNumber] = useState(0);
 
 const TicketList = async () => {
   console.log("Ticket list is being fetched");
@@ -155,7 +156,8 @@ const TicketList = async () => {
 
       // Process the counting number
       console.log('Counting Number:', countingNumber);
-
+      setTicketList(ticketList);
+      setCountingNumber(countingNumber);
       // You can also perform actions such as setting the user's token in state or redirecting the user to another page
    
   } catch (error) {
@@ -374,6 +376,8 @@ const TicketList = async () => {
 
         <TicketBagModal 
         handleModalClose={handleModalClose}
+        ticketList = {ticketList}
+        index = {countingNumber}
 
       />
 

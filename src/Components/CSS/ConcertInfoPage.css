@@ -60,6 +60,7 @@ h2#concertDate{
     height: 480px;
     flex-shrink: 0;
     border-radius: 10px;
+    object-fit: contain;
 }
 
 #concertLine{
