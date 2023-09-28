@@ -1,19 +1,51 @@
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import "../Components/CSS/ConcertInfoPage.css"
 import Navbar from '../Components/Common/NavBar';
 import Info from '../Components/Common/ConcertInfoPage/recipientBlock'
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom'; // เพิ่มการนำเข้าคำสั่ง useParams
+import { EventData } from './ConcertData';
+
 
 const ConcertInfoPage = () => {
+
+    const { concertId } = useParams();
+
+    console.log(concertId);
+    const [concertData, setData] = useState<EventData[]>([]);
+
+  useEffect(() => {
+    // สร้างฟังก์ชัน async เพื่อรับข้อมูลจาก API
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/concerts');         // <--------------------------- เปลี่ยนใส่ API ของคิดดดดดดดดดดดดดดดดดดดดดดดดด
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const responseData = await response.json(); // แปลงข้อมูล json ให้อยู่ในรูปของ Object
+        setData(responseData); // นำข้อมูลที่รับมาเก็บ
+      } 
+      catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData(); // เรียกใช้ฟังก์ชัน fetchData เมื่อคอมโพเนนต์ถูกโหลด
+  }, []);
+
+const selectedConcert = concertData.find(concert => concert.id === concertId);
+
+
+
     return (
         <div className="container" id="content">
             <div className="container" id="info">
                 <div className="column" id="concertInfo">
                     <div className="container" id="concertHeader">
-                        <h2 id="concertName">TWICE 5TH WORLD TOUR READ TO BE IN BANGKOK</h2>
-                        <h2 id="concertDate">23 กันยายน - 24 กันยายน 2566</h2>
+                        <h2 id="concertName">{selectedConcert?.name}</h2>
+                        <h2 id="concertDate">{selectedConcert?.Start} - {selectedConcert?.End}</h2>
                     </div>
-                    <img id="concertPic" src="https://s3-alpha-sig.figma.com/img/8532/dda7/37e49f728557a86c04f6fc714af4e4bf?Expires=1695600000&Signature=qel2gECYwRJTFVlnHWJghWBRnUYt8rqcC7abVpCf3o8CWNuZm21ug86kEybXUN4qo1Krig8OycjWKQ~SnQCmzggCP3TAwBXH0GE~C1JXJbr5Pi7oG8k2rb6uOB3VajSCm2ZKppzxWjLp-DkfrutnXD7VWkNvycdqKbjFj2iFZW75IriZw2f~3WMsviXN8RK8IUfJQ2kgNnSMI38JZzPcPmTm0iuV97KpzFrf7e1ItDabOIU-rT0pPmFyQiXuLhwlKBSNIDGj0snTCYKkQL1VTdw-9kMgBOxWLBjg5-GL1r5fab7scoCeo4l6UcXbXZ8YvYfRdpw8nleCWDDkbcikWg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" alt="">
+                    <img id="concertPic" src={selectedConcert?.PhotoUrl} alt="">
                     </img>
                     <div className="container" id="ticketLine">
                         <h2 id="concertTicket">ขายบัตรวันที่ 16 มิถุนายน เวลา 10.00-22.00</h2>

@@ -1,6 +1,7 @@
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
+import { EventData } from './ConcertData';
 
 const LandingPage: React.FC = () => {
   const Headdiv: React.CSSProperties = {
@@ -60,15 +61,39 @@ const LandingPage: React.FC = () => {
     overflow: 'hidden',
   };
 
+  const [concertData, setData] = useState<EventData[]>([]);
+
+  useEffect(() => {
+    // สร้างฟังก์ชัน async เพื่อรับข้อมูลจาก API
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/concerts');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const responseData = await response.json(); // แปลงข้อมูล json ให้อยู่ในรูปของ Object
+        setData(responseData); // นำข้อมูลที่รับมาเก็บ
+      } 
+      catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData(); // เรียกใช้ฟังก์ชัน fetchData เมื่อคอมโพเนนต์ถูกโหลด
+  }, []);
+  
+
   // Generate Listpic elements
-  const listPics = Array.from({ length: 12 }, (_, index) => (
-    <Link key={index} to="/concert-info"> {/* เปลี่ยนไปยังหน้า ConcertInfoPage */}
-      <div key={index} style={Listpic}>
-        <img src="https://www.w3schools.com/tags/img_girl.jpg" alt="Girl in a jacket" width="230" height="250s"></img>
+  const listPics = concertData.map((concert) => (
+    <Link key={concert.id} to={`/concert-info/${concert.id}`}> {/* เพิ่ม URL parameter */}
+
+      <div key={concert.id} style={Listpic}>
+        <img src={concert.PhotoUrl} alt="Girl in a jacket" width="230" height="250"></img>
         <div style={information}>
-        <Typography color={'black'} fontWeight={'bold'}>Concert ticket</Typography>
-        <Typography color={'black'} fontSize={'15px'}>Concert xhdius iosjidjsiodjsd </Typography>
-        <Typography color={'black'} fontWeight={'bold'} fontSize={'12px'} marginTop={'5px'}>Concert ticket</Typography></div>
+          <Typography color={'black'} fontWeight={'bold'}>{concert.name}</Typography>
+          <Typography color={'black'} fontSize={'15px'}>{concert.Start}</Typography>
+          <Typography color={'black'} fontWeight={'bold'} fontSize={'12px'} marginTop={'5px'}>{concert.price}</Typography>
+        </div>
       </div>
     </Link>
   ));
