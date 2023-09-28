@@ -61,11 +61,15 @@ const LandingPage: React.FC = () => {
     overflow: 'hidden',
   };
 
+<<<<<<< Updated upstream
 
   ///////////////////////////////////////////////////////////////////////////
   
   // ขั้นตอนส่ง request 
 
+=======
+  
+>>>>>>> Stashed changes
   const [concertData, setData] = useState<EventData[]>([]);
 
   useEffect(() => {
