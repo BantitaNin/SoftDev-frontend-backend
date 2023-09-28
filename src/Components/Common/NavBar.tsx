@@ -391,6 +391,7 @@ const TicketList = async () => {
         user_id={user_id} 
         handleModalClose={handleModalClose} // ตรวจสอบว่าส่งฟังก์ชันนี้ไปยัง BalanceModal หรือไม่
         Balance = {showBalance}
+        BalanceCheck={BalanceCheck} 
         />
       )}
     </>

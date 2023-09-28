@@ -3,15 +3,16 @@ import React, { useState } from 'react';
 import "./ModalCSS/BalanceModal.css";
 import { TopupModal } from "./TopupModal";
 import { PayoutModal } from "./PayoutModal";
-import axios, { AxiosResponse } from 'axios';
+
 interface Props {
   iconClose: string;
   handleModalClose: () => void;
   user_id: string;
   Balance: number;
+  BalanceCheck: () => Promise<void>;
 }
 
-export const BalanceModal = ({ iconClose, handleModalClose , user_id, Balance}: Props): JSX.Element => {
+export const BalanceModal = ({ iconClose, handleModalClose , user_id, Balance,  BalanceCheck,}: Props): JSX.Element => {
   console.log("user_id in BalanceModal:", user_id);
   const [isTopupModalclick, setisTopupModalclick] = useState(false);
   const [isPayoutModalclick, setPayoutModalclick] = useState(false);
@@ -56,12 +57,19 @@ export const BalanceModal = ({ iconClose, handleModalClose , user_id, Balance}: 
         <TopupModal
           iconClose="Pics/icon_close.png"
           iconKeyboardArrow="icon-keyboard-arrow-down.png"
+          Balance = {Balance}
+          userId = {user_id}
+          BalanceCheck ={BalanceCheck}
+         
         />
       )}
       {isPayoutModalclick && (
         <PayoutModal
           iconClose="Pics/icon_close.png"
           iconKeyboardArrow="icon-keyboard-arrow-down.png"
+          Balance = {Balance}
+          userId = {user_id}
+          BalanceCheck ={BalanceCheck}
         />
       )}
     </>
