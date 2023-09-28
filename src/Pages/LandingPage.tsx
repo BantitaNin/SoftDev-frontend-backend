@@ -61,6 +61,11 @@ const LandingPage: React.FC = () => {
     overflow: 'hidden',
   };
 
+
+  ///////////////////////////////////////////////////////////////////////////
+  
+  // ขั้นตอนส่ง request 
+
   const [concertData, setData] = useState<EventData[]>([]);
 
   useEffect(() => {
