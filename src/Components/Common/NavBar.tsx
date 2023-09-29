@@ -13,6 +13,7 @@ import { BalanceModal } from './PopupModal/BalanceModal';
 import { Link } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
 
+export let Username = "";
 const Navbar: React.FC = () => {
   
 const [isLoggedInUser, setIsLoggedInUser] = useState(false);
@@ -23,7 +24,6 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
 const [isBalanceModalVisible, setisBalanceModalVisible] = useState(false);
 const [user_id, setUser_id] = useState<string>('');
 const [showBalance, setShowBalance] = useState(0);
-const [showName, setShowName] = useState<string>('');
 
 const handleLoginClickOpen = () => {
   setIsModalLoginOpen(true);
@@ -84,7 +84,7 @@ const handleLogin = async (username: string, password: string) => {
       setIsLoggedInWorker(true);
       setIsModalLoginOpen(false);
      }
-     setShowName(username);
+     Username = username;
     // You can also perform actions such as setting the user's token in state or redirecting the user to another page
   } catch (error) {
     // Handle login errors
@@ -406,3 +406,4 @@ const TicketList = async () => {
 };
 
 export default Navbar;
+
