@@ -23,7 +23,7 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
 const [isBalanceModalVisible, setisBalanceModalVisible] = useState(false);
 const [user_id, setUser_id] = useState<string>('');
 const [showBalance, setShowBalance] = useState(0);
-
+const [showName, setShowName] = useState<string>('');
 
 const handleLoginClickOpen = () => {
   setIsModalLoginOpen(true);
@@ -67,7 +67,7 @@ const handleLogin = async (username: string, password: string) => {
 
   try {
     const response: AxiosResponse<LoginResponse> = await axios.post<LoginResponse>(
-      'https://cors-anywhere.herokuapp.com/https://project-ex56b38hg-shidkung.vercel.app/auth/login',
+      'https://cors-anywhere.herokuapp.com/https://project-8rtdrrksb-shidkung.vercel.app/auth/login',
       requestBody
     );
 
@@ -84,6 +84,7 @@ const handleLogin = async (username: string, password: string) => {
       setIsLoggedInWorker(true);
       setIsModalLoginOpen(false);
      }
+     setShowName(username);
     // You can also perform actions such as setting the user's token in state or redirecting the user to another page
   } catch (error) {
     // Handle login errors
@@ -110,7 +111,7 @@ const BalanceCheck = async () => {
 
   try {
     const response: AxiosResponse<BalanceRespons> = await axios.post<BalanceRespons>(
-      'https://cors-anywhere.herokuapp.com/https://project-ex56b38hg-shidkung.vercel.app/Ticketpay/getTicket',
+      'https://cors-anywhere.herokuapp.com/https://project-8rtdrrksb-shidkung.vercel.app/Ticketpay/getTicket',
      requestBody
     );
 
@@ -143,7 +144,7 @@ const TicketList = async () => {
 
   try {
     const response = await axios.post(
-      'https://cors-anywhere.herokuapp.com/https://project-ex56b38hg-shidkung.vercel.app/concerts/Ticket_id',
+      'https://cors-anywhere.herokuapp.com/https://project-8rtdrrksb-shidkung.vercel.app/concerts/Ticket_id',
       requestBody
     );
 
@@ -274,6 +275,7 @@ const TicketList = async () => {
         {isLoggedInUser ? (
             /* When logged in, display these icons */
             <>
+                          
           <IconButton style={iconStyle} onClick={handleBalanceModal}>
 
             <svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32" fill="none">
@@ -312,6 +314,7 @@ const TicketList = async () => {
           ) :  isLoggedInWorker ? (
             /* When logged in, display these icons */
             <>
+            
           <IconButton style={iconStyle} onClick={handleBalanceModal}>
 
             <svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32" fill="none">
