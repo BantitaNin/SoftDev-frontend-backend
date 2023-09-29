@@ -1,0 +1,1 @@
+export const dbURL = "https://project-8rtdrrksb-shidkung.vercel.app/"
