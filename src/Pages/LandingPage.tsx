@@ -1,9 +1,11 @@
 import React,{ useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
-import { EventData } from './ConcertData';
+import { EventData } from './Interface';
+import { dbURL } from '../DB';
 
 const LandingPage: React.FC = () => {
+
   const Headdiv: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
@@ -70,7 +72,7 @@ const LandingPage: React.FC = () => {
     // สร้างฟังก์ชัน async เพื่อรับข้อมูลจาก API
     const fetchData = async () => {
       try {
-        const response = await fetch('https://project-ex56b38hg-shidkung.vercel.app/concerts');
+        const response = await fetch(dbURL+"concerts");
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -83,6 +85,7 @@ const LandingPage: React.FC = () => {
     };
 
     fetchData(); // เรียกใช้ฟังก์ชัน fetchData เมื่อคอมโพเนนต์ถูกโหลด
+
   }, []);
   
 
