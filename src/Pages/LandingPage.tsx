@@ -88,7 +88,7 @@ const LandingPage: React.FC = () => {
 
   }, []);
   
-  console.log('test git');
+
   // Generate Listpic elements
   const listPics = concertData.map((concert) => (
     <Link key={concert.id} to={`/concert-info/${concert.id}`}> {/* เพิ่ม URL parameter */}
