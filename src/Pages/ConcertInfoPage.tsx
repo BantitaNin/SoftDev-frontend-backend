@@ -1,11 +1,13 @@
 import React,{ useState, useEffect } from 'react';
 import "../Components/CSS/ConcertInfoPage.css"
 import Navbar from '../Components/Common/NavBar';
-
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom'; // เพิ่มการนำเข้าคำสั่ง useParams
 import { EventData , UserData } from './Interface';
-import { dbURL } from '../DB';  
+
+import { dbURL } from '../DB';
+import { Username } from '../Components/Common/NavBar';
+
 
 const ConcertInfoPage = () => {
 
@@ -78,7 +80,7 @@ const ConcertInfoPage = () => {
         console.error('เกิดข้อผิดพลาดในการส่ง POST request:', error);
       });
   };
-
+console.log(Username);
 const selectedConcert = concertData.find(concert => concert.id === concertId);
 
 
@@ -123,7 +125,7 @@ const hiringRecipients = recipients.filter(recipient => recipient.role === "hiri
                     <div className="container" id="recipientSelectBox">
                         <div className="container" id="recipientList">
                             <h2 id="recipientHeader">ผู้รับกดบัตร</h2>
-                            
+
                             {hiringRecipients.map((recipient) => (
 
                                 <div className="container" id="person">

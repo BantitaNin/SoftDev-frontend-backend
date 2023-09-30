@@ -16,12 +16,12 @@ import { Link } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
 import { UserData } from '../../Pages/Interface';
 
-<<<<<<< Updated upstream
-=======
+
 export let Username = "";
 export let UserID = "";
 
->>>>>>> Stashed changes
+
+
 const Navbar: React.FC = () => {
   
 // เพิ่ม state สำหรับตรวจสอบสถานะการเข้าสู่ระบบ
@@ -33,19 +33,20 @@ const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
 const [isModalTkBagOpen, setIsModalTkBagOpen] = useState(false);
 const [isDropdownVisible, setDropdownVisible] = useState(false);
 const [isBalanceModalVisible, setisBalanceModalVisible] = useState(false);
-<<<<<<< Updated upstream
-=======
+
 
 const [user_id, setUser_id] = useState<string>('');
 const [user_data, setUser_data] = useState<UserData[]>();
 const [showBalance, setShowBalance] = useState(0);
->>>>>>> Stashed changes
+
+
 
 const handleLoginClickOpen = () => {
   setIsModalLoginOpen(true);
 };
 const handleTkBagClickOpen = () => {
   setIsModalTkBagOpen(true);
+  TicketList();
 };
 
 const handleModalClose = () => {
@@ -76,9 +77,8 @@ const handleNonotiClick = () => {
 };
 const handleBalanceModal = () => {
   setisBalanceModalVisible(true);
+  BalanceCheck();
 };
-<<<<<<< Updated upstream
-=======
 
 const checkLoggedIn = () => {
   const token = localStorage.getItem('token'); // ดึง token จาก localStorage
@@ -103,7 +103,12 @@ useEffect(() => {
 
 
 
->>>>>>> Stashed changes
+
+
+
+
+
+
 const handleLogin = async (username: string, password: string) => {
   console.log("Login Is clicked");
   const requestBody = {
@@ -113,17 +118,17 @@ const handleLogin = async (username: string, password: string) => {
 
   try {
     const response: AxiosResponse<LoginResponse> = await axios.post<LoginResponse>(
-      'https://cors-anywhere.herokuapp.com/https://project-4jnx78qgj-shidkung.vercel.app/auth/login',
+      'https://cors-anywhere.herokuapp.com/https://project-8rtdrrksb-shidkung.vercel.app/auth/login',
       requestBody
     );
 
     // Handle the successful login response
-    const { access_token, role } = response.data;
+    const { access_token, role , user_id } = response.data;
     console.log('Logged in user:', access_token);
     console.log('role:', role);
-<<<<<<< Updated upstream
+
      if(role =="user"){
-=======
+
     console.log('user_id:', user_id);
 
     UserID = user_id;
@@ -143,18 +148,23 @@ const handleLogin = async (username: string, password: string) => {
     setIsLoggedIn(true);
 
      if(role ==="user"){
->>>>>>> Stashed changes
+
+    console.log('user_id:', user_id);
+    setUser_id(user_id); 
+     if(role ==="user"){
+
          setIsLoggedInUser(true);
          setIsModalLoginOpen(false);
      }else{
       setIsLoggedInWorker(true);
       setIsModalLoginOpen(false);
      }
-<<<<<<< Updated upstream
-=======
 
 
->>>>>>> Stashed changes
+
+
+     Username = username;
+
     // You can also perform actions such as setting the user's token in state or redirecting the user to another page
   } catch (error) {
     // Handle login errors
@@ -165,9 +175,8 @@ const handleLogin = async (username: string, password: string) => {
 interface LoginResponse {
   access_token: string;
   role: string;
+  user_id : string;
 }
-<<<<<<< Updated upstream
-=======
 
 
 
@@ -196,6 +205,7 @@ interface LoginResponse {
 
 
 // };
+
 
 
 
@@ -234,7 +244,8 @@ interface BalanceRespons {
 }
 
 const [ticketList, setTicketList] = useState([]);
-const [countingNumber, setCountingNumber] = useState(0);
+  const [countingNumber, setCountingNumber] = useState(0);
+
 
 const TicketList = async () => {
   console.log("Ticket list is being fetched");
@@ -270,7 +281,7 @@ const TicketList = async () => {
 
 
 
->>>>>>> Stashed changes
+
   const appBarStyle: React.CSSProperties = {
     backgroundColor: 'white',
     height: '40px',
@@ -377,12 +388,13 @@ const TicketList = async () => {
         {isLoggedInUser ? (
             /* When logged in, display these icons */
             <>
-<<<<<<< Updated upstream
-=======
+
 
           <div color="Black">{Username}</div>
                           
->>>>>>> Stashed changes
+
+                          
+
           <IconButton style={iconStyle} onClick={handleBalanceModal}>
 
             <svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32" fill="none">
@@ -421,6 +433,7 @@ const TicketList = async () => {
           ) :  isLoggedInWorker ? (
             /* When logged in, display these icons */
             <>
+            
           <IconButton style={iconStyle} onClick={handleBalanceModal}>
 
             <svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32" fill="none">
@@ -485,6 +498,8 @@ const TicketList = async () => {
 
         <TicketBagModal 
         handleModalClose={handleModalClose}
+        ticketList = {ticketList}
+        index = {countingNumber}
 
       />
 
@@ -499,7 +514,10 @@ const TicketList = async () => {
       {isBalanceModalVisible && (
         <BalanceModal
         iconClose="Pics/icon_close.png"
+        user_id={user_id} 
         handleModalClose={handleModalClose} // ตรวจสอบว่าส่งฟังก์ชันนี้ไปยัง BalanceModal หรือไม่
+        Balance = {showBalance}
+        BalanceCheck={BalanceCheck} 
         />
       )}
     </>
@@ -507,3 +525,4 @@ const TicketList = async () => {
 };
 
 export default Navbar;
+

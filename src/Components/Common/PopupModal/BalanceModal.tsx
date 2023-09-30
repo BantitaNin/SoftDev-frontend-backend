@@ -7,12 +7,17 @@ import { PayoutModal } from "./PayoutModal";
 interface Props {
   iconClose: string;
   handleModalClose: () => void;
+  user_id: string;
+  Balance: number;
+  BalanceCheck: () => Promise<void>;
 }
 
-export const BalanceModal = ({ iconClose, handleModalClose }: Props): JSX.Element => {
+export const BalanceModal = ({ iconClose, handleModalClose , user_id, Balance,  BalanceCheck,}: Props): JSX.Element => {
+  console.log("user_id in BalanceModal:", user_id);
   const [isTopupModalclick, setisTopupModalclick] = useState(false);
   const [isPayoutModalclick, setPayoutModalclick] = useState(false);
-
+  
+  
   const handleTopup = () => {
     setisTopupModalclick(!isTopupModalclick);
   };
@@ -34,7 +39,7 @@ export const BalanceModal = ({ iconClose, handleModalClose }: Props): JSX.Elemen
             <div className="div">
               <div className="frame-2">
                 <div className="text-wrapper">ยอดเงินในบัญชี SafeTicket</div>
-                <div className="text-wrapper-2">250.00 ₿</div>
+                <div className="text-wrapper-2">{Balance === 0 ? 'Loading' : Balance.toFixed(2) + " ₿"}</div>
               </div>
               <div className="frame-3">
                 <button className="button" onClick={handleTopup}>
@@ -52,12 +57,19 @@ export const BalanceModal = ({ iconClose, handleModalClose }: Props): JSX.Elemen
         <TopupModal
           iconClose="Pics/icon_close.png"
           iconKeyboardArrow="icon-keyboard-arrow-down.png"
+          Balance = {Balance}
+          userId = {user_id}
+          BalanceCheck ={BalanceCheck}
+         
         />
       )}
       {isPayoutModalclick && (
         <PayoutModal
           iconClose="Pics/icon_close.png"
           iconKeyboardArrow="icon-keyboard-arrow-down.png"
+          Balance = {Balance}
+          userId = {user_id}
+          BalanceCheck ={BalanceCheck}
         />
       )}
     </>

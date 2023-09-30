@@ -2,12 +2,18 @@
 
 import React from 'react';
 import Typography from '@mui/material/Typography';
-
+interface TicketItem {
+    id: string;
+    created_at: string;
+    // Add other properties as needed
+  }
 const TicketBagModal: React.FC<{
 
     handleModalClose: () => void;
+    index: number; // Prop for the index
+  ticketList: TicketItem[]; 
 
-}> = ({ handleModalClose }) => {
+}> = ({ handleModalClose, index,ticketList }) => {
     const modalOverlayStyle: React.CSSProperties = {
         position: 'fixed',
         top: 0,
@@ -41,15 +47,15 @@ const TicketBagModal: React.FC<{
         flexShrink: 0,
         
     };
-    const ticketlist = Array.from({ length: 12 }, (_, index) => (
+    const ticketlist =ticketList.map((ticket, index) => (
         <div key={index}  >
         <div id = "block" style={{marginTop: '10px',display: 'flex',height: '117px',padding: '7px 16px',justifyContent: 'center',alignItems: 'center',gap: '13px',alignSelf: 'stretch', borderRadius: '5px', border:'1px solid rgba(0, 0, 0, 0.25)', }}>
                     <div id="image"style={{width:'120px', height:'90px', borderRadius:'12px', background: '#FFA62B'}}></div>
                              <div id = "info" > 
                                     <Typography fontSize={"24px"}>BTS concert Ticket 
                                     <Typography fontSize={"12px"}>จัดที่นั่นโน่นนี่,นี่โน่นนั่น
-                                     <Typography fontSize={"12px"}>ที่นั่ง : YY0011
-                                     </Typography><Typography fontSize={"12px"}>วันที่ : DD / MM / YY
+                                     <Typography fontSize={"12px"}>ที่นั่ง : {ticket.id}
+                                     </Typography><Typography fontSize={"12px"}>วันที่ : {ticket.created_at}
                                      </Typography>
                                      </Typography>
                                      </Typography>
@@ -79,7 +85,7 @@ const TicketBagModal: React.FC<{
 
             {/*ticket list*/}
                 <div style={{width: '400px', maxHeight: '300px', overflowY: 'auto'}}>
-                {ticketlist.length === 0 ? (
+                {ticketList.length=== 0 ? (
     <Typography style={{ textAlign: 'center', marginTop: '10px' }}>Empty</Typography>
   ) : (
     ticketlist
