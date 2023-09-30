@@ -5,22 +5,41 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import React, { useState } from 'react';
+import React,{ useState, useEffect } from 'react';
+import { dbURL } from '../../DB';
+
 import LoginModal from './PopupModal/LoginModal';
 import TicketBagModal from './PopupModal/TicketBagModal';
 import NotiList from './PopupModal/NotiList';
 import { BalanceModal } from './PopupModal/BalanceModal';
 import { Link } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
+import { UserData } from '../../Pages/Interface';
 
+<<<<<<< Updated upstream
+=======
+export let Username = "";
+export let UserID = "";
+
+>>>>>>> Stashed changes
 const Navbar: React.FC = () => {
   
+// เพิ่ม state สำหรับตรวจสอบสถานะการเข้าสู่ระบบ
+const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 const [isLoggedInUser, setIsLoggedInUser] = useState(false);
 const [isLoggedInWorker, setIsLoggedInWorker] = useState(false);
 const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
 const [isModalTkBagOpen, setIsModalTkBagOpen] = useState(false);
 const [isDropdownVisible, setDropdownVisible] = useState(false);
 const [isBalanceModalVisible, setisBalanceModalVisible] = useState(false);
+<<<<<<< Updated upstream
+=======
+
+const [user_id, setUser_id] = useState<string>('');
+const [user_data, setUser_data] = useState<UserData[]>();
+const [showBalance, setShowBalance] = useState(0);
+>>>>>>> Stashed changes
 
 const handleLoginClickOpen = () => {
   setIsModalLoginOpen(true);
@@ -38,6 +57,14 @@ const handleModalClose = () => {
 
 
 const handleLogout = () => {
+  // ลบ token และบทบาทออกจาก localStorage
+  localStorage.removeItem('token');
+  localStorage.removeItem('role');
+
+  UserID = "";
+  Username = "";
+
+  // ตั้งค่าสถานะการเข้าสู่ระบบเป็น false สำหรับทั้งผู้ใช้ทั่วไปและ worker
   setIsLoggedInUser(false);
   setIsLoggedInWorker(false);
 };
@@ -50,6 +77,33 @@ const handleNonotiClick = () => {
 const handleBalanceModal = () => {
   setisBalanceModalVisible(true);
 };
+<<<<<<< Updated upstream
+=======
+
+const checkLoggedIn = () => {
+  const token = localStorage.getItem('token'); // ดึง token จาก localStorage
+
+  if (token) {
+    // มี token ใน localStorage แสดงว่าผู้ใช้เคยเข้าสู่ระบบ
+    setIsLoggedIn(true);
+    // ตรวจสอบบทบาทของผู้ใช้และตั้งค่าตามความเหมาะสม
+    const role = localStorage.getItem('role');
+    if (role === 'user') {
+      setIsLoggedInUser(true);
+    } else if (role === 'worker') {
+      setIsLoggedInWorker(true);
+    }
+  }
+};
+
+// เรียกใช้ checkLoggedIn ใน useEffect เมื่อคอมโพเนนต์ถูกโหลด
+useEffect(() => {
+  checkLoggedIn();
+}, []);
+
+
+
+>>>>>>> Stashed changes
 const handleLogin = async (username: string, password: string) => {
   console.log("Login Is clicked");
   const requestBody = {
@@ -67,13 +121,40 @@ const handleLogin = async (username: string, password: string) => {
     const { access_token, role } = response.data;
     console.log('Logged in user:', access_token);
     console.log('role:', role);
+<<<<<<< Updated upstream
      if(role =="user"){
+=======
+    console.log('user_id:', user_id);
+
+    UserID = user_id;
+
+
+    // เก็บ token และบทบาทลงใน localStorage
+    localStorage.setItem('token', access_token);
+    localStorage.setItem('role', role);
+    
+    // เอาชื่อ id ไป แสดง
+
+    //FindUsernameByID();
+    
+    console.log({user_data});
+
+    setUser_id(user_id); 
+    setIsLoggedIn(true);
+
+     if(role ==="user"){
+>>>>>>> Stashed changes
          setIsLoggedInUser(true);
          setIsModalLoginOpen(false);
      }else{
       setIsLoggedInWorker(true);
       setIsModalLoginOpen(false);
      }
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
     // You can also perform actions such as setting the user's token in state or redirecting the user to another page
   } catch (error) {
     // Handle login errors
@@ -85,6 +166,111 @@ interface LoginResponse {
   access_token: string;
   role: string;
 }
+<<<<<<< Updated upstream
+=======
+
+
+
+
+// const FindUsernameByID = async () => {
+
+//   console.log("Find User Name by ID");
+  
+//   fetch('https://project-8rtdrrksb-shidkung.vercel.app/users/id', {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+//   body: JSON.stringify({ id: user_id }),
+// })
+//   .then(response => response.json())
+//   .then(data => {
+//     // ทำอะไรกับข้อมูลที่ได้รับ
+//     setUser_data(data);
+//   })
+//   .catch(error => {
+//     // จัดการเมื่อเกิดข้อผิดพลาด
+//     console.error('เกิดข้อผิดพลาด:', error);
+//   });
+
+
+
+// };
+
+
+
+
+
+const BalanceCheck = async () => {
+  console.log("Balance is showed");
+  const requestBody = {
+    id: Number(user_id),
+  };
+
+
+  try {
+    const response: AxiosResponse<BalanceRespons> = await axios.post<BalanceRespons>(
+      'https://cors-anywhere.herokuapp.com/https://project-8rtdrrksb-shidkung.vercel.app/Ticketpay/getTicket',
+     requestBody
+    );
+
+    // Handle the successful login response
+    const {Ticketpay } = response.data;
+    console.log('Balance:', Ticketpay);
+   setShowBalance(Ticketpay);
+    
+    // You can also perform actions such as setting the user's token in state or redirecting the user to another page
+  } catch (error) {
+    // Handle login errors
+    console.error('Login error:', error);
+  }
+};
+
+
+
+interface BalanceRespons {
+  Ticketpay: number;
+  
+}
+
+const [ticketList, setTicketList] = useState([]);
+const [countingNumber, setCountingNumber] = useState(0);
+
+const TicketList = async () => {
+  console.log("Ticket list is being fetched");
+  const requestBody = {
+    id: Number(user_id),
+  };
+
+  try {
+    const response = await axios.post(
+      'https://cors-anywhere.herokuapp.com/https://project-8rtdrrksb-shidkung.vercel.app/concerts/Ticket_id',
+      requestBody
+    );
+
+    // Check if the response status is OK (200)
+    
+      const [ticketList, countingNumber] = response.data;
+
+      // Process the ticket list
+      console.log('Ticket List:', ticketList);
+
+      // Process the counting number
+      console.log('Counting Number:', countingNumber);
+      setTicketList(ticketList);
+      setCountingNumber(countingNumber);
+      // You can also perform actions such as setting the user's token in state or redirecting the user to another page
+   
+  } catch (error) {
+    // Handle errors
+    console.error('TicketList error:', error);
+  }
+};
+
+
+
+
+>>>>>>> Stashed changes
   const appBarStyle: React.CSSProperties = {
     backgroundColor: 'white',
     height: '40px',
@@ -187,9 +373,16 @@ interface LoginResponse {
           </IconButton>
         </Link>
         <div style={Groupstyle}>
+          
         {isLoggedInUser ? (
             /* When logged in, display these icons */
             <>
+<<<<<<< Updated upstream
+=======
+
+          <div color="Black">{Username}</div>
+                          
+>>>>>>> Stashed changes
           <IconButton style={iconStyle} onClick={handleBalanceModal}>
 
             <svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32" fill="none">
