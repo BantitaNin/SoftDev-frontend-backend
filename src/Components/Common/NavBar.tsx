@@ -5,41 +5,25 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import React,{ useState, useEffect } from 'react';
-import { dbURL } from '../../DB';
-
+import React, { useState } from 'react';
 import LoginModal from './PopupModal/LoginModal';
 import TicketBagModal from './PopupModal/TicketBagModal';
 import NotiList from './PopupModal/NotiList';
 import { BalanceModal } from './PopupModal/BalanceModal';
 import { Link } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
-import { UserData } from '../../Pages/Interface';
-
 
 export let Username = "";
-export let UserID = "";
-
-
-
 const Navbar: React.FC = () => {
   
-// เพิ่ม state สำหรับตรวจสอบสถานะการเข้าสู่ระบบ
-const [isLoggedIn, setIsLoggedIn] = useState(false);
-
 const [isLoggedInUser, setIsLoggedInUser] = useState(false);
 const [isLoggedInWorker, setIsLoggedInWorker] = useState(false);
 const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
 const [isModalTkBagOpen, setIsModalTkBagOpen] = useState(false);
 const [isDropdownVisible, setDropdownVisible] = useState(false);
 const [isBalanceModalVisible, setisBalanceModalVisible] = useState(false);
-
-
 const [user_id, setUser_id] = useState<string>('');
-const [user_data, setUser_data] = useState<UserData[]>();
 const [showBalance, setShowBalance] = useState(0);
-
-
 
 const handleLoginClickOpen = () => {
   setIsModalLoginOpen(true);
@@ -58,14 +42,6 @@ const handleModalClose = () => {
 
 
 const handleLogout = () => {
-  // ลบ token และบทบาทออกจาก localStorage
-  localStorage.removeItem('token');
-  localStorage.removeItem('role');
-
-  UserID = "";
-  Username = "";
-
-  // ตั้งค่าสถานะการเข้าสู่ระบบเป็น false สำหรับทั้งผู้ใช้ทั่วไปและ worker
   setIsLoggedInUser(false);
   setIsLoggedInWorker(false);
 };
@@ -79,33 +55,6 @@ const handleBalanceModal = () => {
   setisBalanceModalVisible(true);
   BalanceCheck();
 };
-
-const checkLoggedIn = () => {
-  const token = localStorage.getItem('token'); // ดึง token จาก localStorage
-
-  if (token) {
-    // มี token ใน localStorage แสดงว่าผู้ใช้เคยเข้าสู่ระบบ
-    setIsLoggedIn(true);
-    // ตรวจสอบบทบาทของผู้ใช้และตั้งค่าตามความเหมาะสม
-    const role = localStorage.getItem('role');
-    if (role === 'user') {
-      setIsLoggedInUser(true);
-    } else if (role === 'worker') {
-      setIsLoggedInWorker(true);
-    }
-  }
-};
-
-// เรียกใช้ checkLoggedIn ใน useEffect เมื่อคอมโพเนนต์ถูกโหลด
-useEffect(() => {
-  checkLoggedIn();
-}, []);
-
-
-
-
-
-
 
 
 
@@ -126,45 +75,16 @@ const handleLogin = async (username: string, password: string) => {
     const { access_token, role , user_id } = response.data;
     console.log('Logged in user:', access_token);
     console.log('role:', role);
-
-     if(role =="user"){
-
-    console.log('user_id:', user_id);
-
-    UserID = user_id;
-
-
-    // เก็บ token และบทบาทลงใน localStorage
-    localStorage.setItem('token', access_token);
-    localStorage.setItem('role', role);
-    
-    // เอาชื่อ id ไป แสดง
-
-    //FindUsernameByID();
-    
-    console.log({user_data});
-
-    setUser_id(user_id); 
-    setIsLoggedIn(true);
-
-     if(role ==="user"){
-
     console.log('user_id:', user_id);
     setUser_id(user_id); 
      if(role ==="user"){
-
          setIsLoggedInUser(true);
          setIsModalLoginOpen(false);
      }else{
       setIsLoggedInWorker(true);
       setIsModalLoginOpen(false);
      }
-
-
-
-
      Username = username;
-
     // You can also perform actions such as setting the user's token in state or redirecting the user to another page
   } catch (error) {
     // Handle login errors
@@ -177,35 +97,6 @@ interface LoginResponse {
   role: string;
   user_id : string;
 }
-
-
-
-
-// const FindUsernameByID = async () => {
-
-//   console.log("Find User Name by ID");
-  
-//   fetch('https://project-8rtdrrksb-shidkung.vercel.app/users/id', {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-//   body: JSON.stringify({ id: user_id }),
-// })
-//   .then(response => response.json())
-//   .then(data => {
-//     // ทำอะไรกับข้อมูลที่ได้รับ
-//     setUser_data(data);
-//   })
-//   .catch(error => {
-//     // จัดการเมื่อเกิดข้อผิดพลาด
-//     console.error('เกิดข้อผิดพลาด:', error);
-//   });
-
-
-
-// };
-
 
 
 
@@ -242,10 +133,8 @@ interface BalanceRespons {
   Ticketpay: number;
   
 }
-
 const [ticketList, setTicketList] = useState([]);
   const [countingNumber, setCountingNumber] = useState(0);
-
 
 const TicketList = async () => {
   console.log("Ticket list is being fetched");
@@ -277,7 +166,6 @@ const TicketList = async () => {
     console.error('TicketList error:', error);
   }
 };
-
 
 
 
@@ -384,17 +272,10 @@ const TicketList = async () => {
           </IconButton>
         </Link>
         <div style={Groupstyle}>
-          
         {isLoggedInUser ? (
             /* When logged in, display these icons */
             <>
-
-
-          <div color="Black">{Username}</div>
                           
-
-                          
-
           <IconButton style={iconStyle} onClick={handleBalanceModal}>
 
             <svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32" fill="none">
