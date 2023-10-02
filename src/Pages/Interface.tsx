@@ -13,6 +13,8 @@ export interface EventData {
 }
 
 export interface UserData {
+
+
   
   user_id:string;
   created_at: string;
@@ -32,4 +34,16 @@ export interface Employ{
   reciever_id: string ;
 
   TicketNum:number;
+}
+
+export interface GetHiringByBuyerId {
+
+  id: number,
+  created_a: string,
+  Ticketpay: number,
+  TicketNum: number,
+  buyer_id: number,
+  reciever_id: number,
+  Concert_id: number,
+  Accepting: false
 }

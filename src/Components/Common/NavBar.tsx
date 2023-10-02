@@ -5,24 +5,38 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import React, { useState } from 'react';
+import React,{ useState, useEffect } from 'react';
+import { dbURL } from '../../DB';
+
 import LoginModal from './PopupModal/LoginModal';
 import TicketBagModal from './PopupModal/TicketBagModal';
 import NotiList from './PopupModal/NotiList';
 import { BalanceModal } from './PopupModal/BalanceModal';
 import { Link } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
+import { UserData } from '../../Pages/Interface';
+
+const hookupUrl = "https://cors-anywhere.herokuapp.com/"
 
 export let Username = "";
+export let UserID = "";
+
+
+
 const Navbar: React.FC = () => {
   
+// เพิ่ม state สำหรับตรวจสอบสถานะการเข้าสู่ระบบ
+const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 const [isLoggedInUser, setIsLoggedInUser] = useState(false);
 const [isLoggedInWorker, setIsLoggedInWorker] = useState(false);
 const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
 const [isModalTkBagOpen, setIsModalTkBagOpen] = useState(false);
 const [isDropdownVisible, setDropdownVisible] = useState(false);
 const [isBalanceModalVisible, setisBalanceModalVisible] = useState(false);
+
 const [user_id, setUser_id] = useState<string>('');
+var [user_data, setUser_data] = useState<UserData>();
 const [showBalance, setShowBalance] = useState(0);
 
 const handleLoginClickOpen = () => {
@@ -30,7 +44,6 @@ const handleLoginClickOpen = () => {
 };
 const handleTkBagClickOpen = () => {
   setIsModalTkBagOpen(true);
-  TicketList();
 };
 
 const handleModalClose = () => {
@@ -42,6 +55,16 @@ const handleModalClose = () => {
 
 
 const handleLogout = () => {
+  // ลบ token และบทบาทออกจาก localStorage
+   localStorage.removeItem('token');
+   localStorage.removeItem('role');
+   localStorage.removeItem('Username');
+   localStorage.removeItem('Id');
+
+  UserID = "";
+  Username = "";
+
+  // ตั้งค่าสถานะการเข้าสู่ระบบเป็น false สำหรับทั้งผู้ใช้ทั่วไปและ worker
   setIsLoggedInUser(false);
   setIsLoggedInWorker(false);
 };
@@ -53,13 +76,68 @@ const handleNonotiClick = () => {
 };
 const handleBalanceModal = () => {
   setisBalanceModalVisible(true);
-  BalanceCheck();
 };
+
+const checkLoggedIn = () => {
+
+
+  const token = localStorage.getItem('token'); // ดึง token จาก localStorage
+
+  if (token) {
+    // มี token ใน localStorage แสดงว่าผู้ใช้เคยเข้าสู่ระบบ
+    setIsLoggedIn(true);
+    // ตรวจสอบบทบาทของผู้ใช้และตั้งค่าตามความเหมาะสม
+    const role = localStorage.getItem('role');
+
+    console.log(role);
+
+    if (role === 'user') {
+      setIsLoggedInUser(true);
+    } else if (role === 'worker' || role === 'hiring') {
+      setIsLoggedInWorker(true);
+    }
+
+    FindUsernameByID(user_id);
+  }
+  else{
+    setIsLoggedIn(false);
+    setIsLoggedInUser(false);
+    setIsLoggedInWorker(false);
+  }
+};
+
+// เรียกใช้ checkLoggedIn ใน useEffect เมื่อคอมโพเนนต์ถูกโหลด
+useEffect(() => {
+  
+  checkLoggedIn();
+  
+}, []);
+
+
+
+
+useEffect(() => {
+  console.log("refresh username and Id");
+
+  const storedUsername = localStorage.getItem('Username');
+  if (storedUsername) {
+    Username = storedUsername;
+  }
+
+  const storedID = localStorage.getItem('Id');
+  if (storedID) {
+    UserID = storedID;
+  }
+
+}, []);
 
 
 
 const handleLogin = async (username: string, password: string) => {
+
   console.log("Login Is clicked");
+
+
   const requestBody = {
     username: username,
     password: password,
@@ -67,16 +145,58 @@ const handleLogin = async (username: string, password: string) => {
 
   try {
     const response: AxiosResponse<LoginResponse> = await axios.post<LoginResponse>(
-      'https://cors-anywhere.herokuapp.com/https://project-8rtdrrksb-shidkung.vercel.app/auth/login',
+      hookupUrl+dbURL+'auth/login',
       requestBody
     );
 
     // Handle the successful login response
-    const { access_token, role , user_id } = response.data;
+    var { access_token, role ,user_id } = response.data;
     console.log('Logged in user:', access_token);
     console.log('role:', role);
     console.log('user_id:', user_id);
+
+    UserID = user_id;
+    
+    var req1 = {
+      id:user_id
+    }
+    console.log(requestBody);
+    //เก็บ token และบทบาทลงใน localStorage
+    localStorage.setItem('token', access_token);
+    localStorage.setItem('role', role);
+    
+
+    // เอาชื่อ id ไป แสดง
+
+
+    try {
+      const response: AxiosResponse<UserData> = await axios.post(
+        hookupUrl+dbURL+'users/id', req1
+      );
+      
+      setUser_data(response.data);
+
+      
+      Username = response.data.name as string; // Update Username here
+      
+      console.log(response.data); // Use response.data instead of user_data
+  
+      // ...
+  
+    } catch (error) {
+      // Handle login errors
+      console.error(error);
+    }
+    
+
+    
+    
+
+
     setUser_id(user_id); 
+    setIsLoggedIn(true);
+    
+
      if(role ==="user"){
          setIsLoggedInUser(true);
          setIsModalLoginOpen(false);
@@ -84,7 +204,11 @@ const handleLogin = async (username: string, password: string) => {
       setIsLoggedInWorker(true);
       setIsModalLoginOpen(false);
      }
-     Username = username;
+
+
+     localStorage.setItem('Username', Username);
+     localStorage.setItem('Id', UserID);
+
     // You can also perform actions such as setting the user's token in state or redirecting the user to another page
   } catch (error) {
     // Handle login errors
@@ -95,8 +219,37 @@ const handleLogin = async (username: string, password: string) => {
 interface LoginResponse {
   access_token: string;
   role: string;
-  user_id : string;
+  user_id: string;
 }
+
+
+
+
+const FindUsernameByID = async (u_id:string ) => {
+
+  console.log("Find User Name by ID");
+
+  const requestBody = {
+    id: parseInt(u_id)
+  };
+  try {
+    const response: AxiosResponse<UserData> = await axios.post(
+      dbURL+'users/id',requestBody
+    );
+
+    setUser_data(response.data);
+    
+    Username = user_data?.name as string;;
+    
+    // You can also perform actions such as setting the user's token in state or redirecting the user to another page
+  } catch (error) {
+    // Handle login errors
+    console.error(error);
+  }
+
+
+
+};
 
 
 
@@ -111,7 +264,7 @@ const BalanceCheck = async () => {
 
   try {
     const response: AxiosResponse<BalanceRespons> = await axios.post<BalanceRespons>(
-      'https://cors-anywhere.herokuapp.com/https://project-8rtdrrksb-shidkung.vercel.app/Ticketpay/getTicket',
+      dbURL+'Ticketpay/getTicket',
      requestBody
     );
 
@@ -133,8 +286,9 @@ interface BalanceRespons {
   Ticketpay: number;
   
 }
+
 const [ticketList, setTicketList] = useState([]);
-  const [countingNumber, setCountingNumber] = useState(0);
+const [countingNumber, setCountingNumber] = useState(0);
 
 const TicketList = async () => {
   console.log("Ticket list is being fetched");
@@ -144,7 +298,7 @@ const TicketList = async () => {
 
   try {
     const response = await axios.post(
-      'https://cors-anywhere.herokuapp.com/https://project-8rtdrrksb-shidkung.vercel.app/concerts/Ticket_id',
+      dbURL+'concerts/Ticket_id',
       requestBody
     );
 
@@ -264,6 +418,7 @@ const TicketList = async () => {
     <AppBar position="static" style={appBarStyle}>
 
       <Toolbar>
+        
         <Link to="/">
           <IconButton edge="start" color="inherit">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" style={svgStyle}>
@@ -272,12 +427,19 @@ const TicketList = async () => {
           </IconButton>
         </Link>
         <div style={Groupstyle}>
+          
         {isLoggedInUser ? (
             /* When logged in, display these icons */
             <>
+          
+          <IconButton style={iconStyle} >
+
+            <Typography>{Username}</Typography> {/* แสดง Username ที่ได้รับจากการเข้าสู่ระบบ */}
+          </IconButton>
+          
                           
           <IconButton style={iconStyle} onClick={handleBalanceModal}>
-
+          
             <svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32" fill="none">
               <rect width="57" height="32" rx="16" fill="#EEEEEE"/>
               <path d="M39.5 10.4933V7.83333C39.5 6.55 38.45 5.5 37.1667 5.5H20.8333C19.5383 5.5 18.5 6.55 18.5 7.83333V24.1667C18.5 25.45 19.5383 26.5 20.8333 26.5H37.1667C38.45 26.5 39.5 25.45 39.5 24.1667V21.5067C40.1883 21.0983 40.6667 20.3633 40.6667 19.5V12.5C40.6667 11.6367 40.1883 10.9017 39.5 10.4933ZM38.3333 12.5V19.5H30.1667V12.5H38.3333ZM20.8333 24.1667V7.83333H37.1667V10.1667H30.1667C28.8833 10.1667 27.8333 11.2167 27.8333 12.5V19.5C27.8333 20.7833 28.8833 21.8333 30.1667 21.8333H37.1667V24.1667H20.8333Z" fill="black"/>
@@ -314,7 +476,10 @@ const TicketList = async () => {
           ) :  isLoggedInWorker ? (
             /* When logged in, display these icons */
             <>
-            
+            <IconButton style={iconStyle} >
+
+<Typography>{Username}</Typography> {/* แสดง Username ที่ได้รับจากการเข้าสู่ระบบ */}
+</IconButton>
           <IconButton style={iconStyle} onClick={handleBalanceModal}>
 
             <svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32" fill="none">
@@ -378,10 +543,7 @@ const TicketList = async () => {
       {isModalTkBagOpen && (
 
         <TicketBagModal 
-        handleModalClose={handleModalClose}
-        ticketList = {ticketList}
-        index = {countingNumber}
-
+        handleModalClose={handleModalClose} index={0} ticketList={[]}
       />
 
 
@@ -395,15 +557,13 @@ const TicketList = async () => {
       {isBalanceModalVisible && (
         <BalanceModal
         iconClose="Pics/icon_close.png"
-        user_id={user_id} 
         handleModalClose={handleModalClose} // ตรวจสอบว่าส่งฟังก์ชันนี้ไปยัง BalanceModal หรือไม่
-        Balance = {showBalance}
-        BalanceCheck={BalanceCheck} 
-        />
+        user_id={''} Balance={0} BalanceCheck={function (): Promise<void> {
+          throw new Error('Function not implemented.');
+        } }        />
       )}
     </>
   );
 };
 
 export default Navbar;
-
