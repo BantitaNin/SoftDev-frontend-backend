@@ -1,5 +1,5 @@
-
 // src/Components/Common/NavBar.tsx
+
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,6 +17,10 @@ import axios, { AxiosResponse } from 'axios';
 import { UserData } from '../../Pages/Interface';
 
 const hookupUrl = "https://cors-anywhere.herokuapp.com/"
+
+import { useCookies } from "react-cookie";
+
+
 
 export let Username = "";
 export let UserID = "";
@@ -46,12 +50,22 @@ const handleTkBagClickOpen = () => {
   setIsModalTkBagOpen(true);
 };
 
-const handleModalClose = () => {
-  setIsModalLoginOpen(false);
-  setIsModalTkBagOpen(false);
-  setisBalanceModalVisible(false);
-};
 
+
+  const handleModalClose = () => {
+    setIsModalLoginOpen(false);
+    setIsModalTkBagOpen(false);
+    setisBalanceModalVisible(false);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedInUser(false);
+    setIsLoggedInWorker(false);
+  };
+
+  const handlenotiClick = () => {
+    setDropdownVisible(true);
+  };
 
 
 const handleLogout = () => {
@@ -76,6 +90,7 @@ const handleNonotiClick = () => {
 };
 const handleBalanceModal = () => {
   setisBalanceModalVisible(true);
+             BalanceCheck();
 };
 
 const checkLoggedIn = () => {
@@ -131,6 +146,11 @@ useEffect(() => {
 
 }, []);
 
+
+
+  const setUserDataCookie = (userData: any) => {
+    setCookie("user", JSON.stringify(userData), { path: "/" });
+  };
 
 
 const handleLogin = async (username: string, password: string) => {
@@ -213,8 +233,9 @@ const handleLogin = async (username: string, password: string) => {
   } catch (error) {
     // Handle login errors
     console.error('Login error:', error);
+
   }
-};
+
 
 interface LoginResponse {
   access_token: string;
@@ -222,6 +243,18 @@ interface LoginResponse {
   user_id: string;
 }
 
+
+    try {
+      const response: AxiosResponse<BalanceRespons> =
+        await axios.post<BalanceRespons>(
+          dbURL + "/Ticketpay/getTicket",
+          requestBody
+        );
+
+      // Handle the successful login response
+      const { Ticketpay } = response.data;
+      console.log("Balance:", Ticketpay);
+      setShowBalance(Ticketpay);
 
 
 
@@ -290,11 +323,13 @@ interface BalanceRespons {
 const [ticketList, setTicketList] = useState([]);
 const [countingNumber, setCountingNumber] = useState(0);
 
-const TicketList = async () => {
-  console.log("Ticket list is being fetched");
-  const requestBody = {
-    id: Number(user_id),
-  };
+
+  const TicketList = async () => {
+    console.log("Ticket list is being fetched");
+    const requestBody = {
+      id: Number(user_id),
+    };
+
 
   try {
     const response = await axios.post(
@@ -302,116 +337,105 @@ const TicketList = async () => {
       requestBody
     );
 
-    // Check if the response status is OK (200)
-    
+
       const [ticketList, countingNumber] = response.data;
 
       // Process the ticket list
-      console.log('Ticket List:', ticketList);
+      console.log("Ticket List:", ticketList);
 
       // Process the counting number
-      console.log('Counting Number:', countingNumber);
+      console.log("Counting Number:", countingNumber);
       setTicketList(ticketList);
       setCountingNumber(countingNumber);
       // You can also perform actions such as setting the user's token in state or redirecting the user to another page
-   
-  } catch (error) {
-    // Handle errors
-    console.error('TicketList error:', error);
-  }
-};
-
-
-
+    } catch (error) {
+      // Handle errors
+      console.error("TicketList error:", error);
+    }
+  };
 
   const appBarStyle: React.CSSProperties = {
-    backgroundColor: 'white',
-    height: '40px',
+    backgroundColor: "white",
+    height: "40px",
   };
 
   const svgStyle: React.CSSProperties = {
-    marginBottom: '25px',
+    marginBottom: "25px",
   };
   const loginButtonStyle: React.CSSProperties = {
-
-    borderRadius: '50px',
-    background: '#000',
-    width: '94px',
-    height: '32px',
-    marginBottom: '25px',
-    color: '#FFF',
-    textAlign: 'center', // Enclose property name in quotes
-    fontFamily: 'Inter', // Enclose property name in quotes
-    fontSize: '12px',
-    fontStyle: 'normal', // Enclose property value in quotes
-    fontWeight: '700',
-    lineHeight: 'normal'  // Enclose property value in quotes
+    borderRadius: "50px",
+    background: "#000",
+    width: "94px",
+    height: "32px",
+    marginBottom: "25px",
+    color: "#FFF",
+    textAlign: "center", // Enclose property name in quotes
+    fontFamily: "Inter", // Enclose property name in quotes
+    fontSize: "12px",
+    fontStyle: "normal", // Enclose property value in quotes
+    fontWeight: "700",
+    lineHeight: "normal", // Enclose property value in quotes
   };
   const iconStyle: React.CSSProperties = {
-
-    marginBottom: '25px',
-
+    marginBottom: "25px",
   };
   const Groupstyle: React.CSSProperties = {
-
-    marginLeft: 'auto',
-
+    marginLeft: "auto",
   };
 
   const modalOverlayStyle: React.CSSProperties = {
-    position: 'fixed',
+    position: "fixed",
     top: 0,
     left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
-    display: 'flex',
-    justifyContent: 'center', // Center horizontally
-    alignItems: 'center', // Center vertically
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+    display: "flex",
+    justifyContent: "center", // Center horizontally
+    alignItems: "center", // Center vertically
     zIndex: 999, // Ensure the modal is on top of other content
   };
 
   const modalContentStyle: React.CSSProperties = {
-    backgroundColor: 'white',
-    padding: '20px',
-    borderRadius: '8px',
-    width: '400px',
-    height: '300px',
-    justifyContent: 'center',
-    alignItems: 'center',
-    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
+    backgroundColor: "white",
+    padding: "20px",
+    borderRadius: "8px",
+    width: "400px",
+    height: "300px",
+    justifyContent: "center",
+    alignItems: "center",
+    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
     zIndex: 1000, // เพิ่ม z-index เพื่อทำให้ BalanceModal อยู่ด้านหน้า
   };
-  
- 
+
   const modalinfo: React.CSSProperties = {
-    
-    height: '247px',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: '25px',
+    height: "247px",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "25px",
     flexShrink: 0,
   };
   const contentstyle: React.CSSProperties = {
-    alignItems: 'center',
-    marginLeft: '40px',
-    justifyContent: 'center',
+    alignItems: "center",
+    marginLeft: "40px",
+    justifyContent: "center",
   };
 
-  const dropdown: React.CSSProperties={
-    width: '480px',
-    height: '650px',
-    borderRadius: '8px',
-    border: '1px solid #E4E4E4',
-    background: '#FFF',
-    right: '0', // Position the dropdown at the right side
-    top: '40px',
-    zIndex: 999, 
-    position: 'absolute',
-    
-    overflowY: 'auto'
+  const dropdown: React.CSSProperties = {
+    width: "480px",
+    height: "650px",
+    borderRadius: "8px",
+    border: "1px solid #E4E4E4",
+    background: "#FFF",
+    right: "0", // Position the dropdown at the right side
+    top: "40px",
+    zIndex: 999,
+    position: "absolute",
+
+    overflowY: "auto",
   };
+
 
 
   return (<>
@@ -524,46 +548,56 @@ const TicketList = async () => {
            
           )}
           
+
+  
           </div>
-      
-      </Toolbar>
-    </AppBar>
-     
-    {isModalLoginOpen && (
-         <LoginModal
-         modalOverlayStyle={modalOverlayStyle}
-         modalContentStyle={modalContentStyle}
-         modalinfo={modalinfo}
-         contentstyle={contentstyle}
-         handleModalClose={handleModalClose}
-         handleLogin={handleLogin}
-       />
+        </Toolbar>
+      </AppBar>
+
+      {isModalLoginOpen && (
+        <LoginModal
+          modalOverlayStyle={modalOverlayStyle}
+          modalContentStyle={modalContentStyle}
+          modalinfo={modalinfo}
+          contentstyle={contentstyle}
+          handleModalClose={handleModalClose}
+          handleLogin={handleLogin}
+        />
       )}
 
       {isModalTkBagOpen && (
+
 
         <TicketBagModal 
         handleModalClose={handleModalClose} index={0} ticketList={[]}
       />
 
 
+
       )}
       {isDropdownVisible && (
-       <div style={dropdown} onMouseEnter={handlenotiClick} onMouseLeave={handleNonotiClick}   >
-          <NotiList/>
+        <div
+          style={dropdown}
+          onMouseEnter={handlenotiClick}
+          onMouseLeave={handleNonotiClick}
+        >
+          <NotiList />
         </div>
-       
       )}
       {isBalanceModalVisible && (
         <BalanceModal
+
         iconClose="Pics/icon_close.png"
         handleModalClose={handleModalClose} // ตรวจสอบว่าส่งฟังก์ชันนี้ไปยัง BalanceModal หรือไม่
         user_id={''} Balance={0} BalanceCheck={function (): Promise<void> {
           throw new Error('Function not implemented.');
         } }        />
+
       )}
     </>
   );
 };
 
+
 export default Navbar;
+
