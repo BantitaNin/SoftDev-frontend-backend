@@ -1,1 +1,1 @@
-export const dbURL = "https://project-8rtdrrksb-shidkung.vercel.app/"
+export const dbURL = "https://project-ls1s2bbt1-shidkung.vercel.app/"
