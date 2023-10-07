@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import "../Components/CSS/ConcertInfoPage.css"
 import Navbar, { UserID } from '../Components/Common/NavBar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import { useParams } from 'react-router-dom'; // เพิ่มการนำเข้าคำสั่ง useParams
 import { Employ, EventData, UserData } from './Interface';
-
 import { dbURL } from '../DB';
 import { Username } from '../Components/Common/NavBar';
 import axios, { AxiosResponse } from 'axios';
+import FailTicketComponent from '../Components/LoadingComponent/FailTicketComponent';
+import GetTicketComponent from '../Components/LoadingComponent/GetTicketComponent';
 
-
-
-
-
-const ConcertInfoPage = () => {
-
+const ConcertInfoPage = ({ setTicketStatus }: { setTicketStatus: Function }) => {
+  const navigate = useNavigate();
   
   const hookupUrl = "https://cors-anywhere.herokuapp.com/"
   const { concertId } = useParams();
@@ -64,6 +61,7 @@ const ConcertInfoPage = () => {
 
     };
     fetchUser(); // เรียกใช้ฟังก์ชัน fetchData เมื่อคอมโพเนนต์ถูกโหลด
+    
 
   }, []);
 
@@ -97,6 +95,43 @@ const ConcertInfoPage = () => {
 
   };
 
+  const handleGetTicketsClick = async (_user_id: string, ticket: number, concert_name: string) => {
+    const currentTime = new Date();
+    const allowedStartTime = new Date(currentTime);
+    allowedStartTime.setHours(13, 0, 0); // เวลาเริ่มต้นที่อนุญาตให้กดบัตร (13:00)
+  
+    const allowedEndTime = new Date(currentTime);
+    allowedEndTime.setHours(16, 0, 0); // เวลาสิ้นสุดที่อนุญาตให้กดบัตร (16:00)
+  
+    if (currentTime >= allowedStartTime && currentTime <= allowedEndTime) {
+      const postData = {
+        user_id: _user_id,
+        Ticket: ticket,
+        Concert_name: concert_name
+      };
+    
+      try {
+        const response = await axios.post(
+          hookupUrl + dbURL + 'concerts/buys',
+          postData
+        );
+        navigate('/loading');
+        if (response.status === 201) {
+          setTicketStatus(true); // อัปเดตค่า ticketStatus เป็น true
+          console.log('กดบัตรได้แล้ว ไอเวร');
+        } else {
+          setTicketStatus(false); // อัปเดตค่า ticketStatus เป็น false
+          console.log('กดช้าไป โง่นัก');
+        }
+      } catch (error) {
+        console.error('เออเร่อนะไอโง่ :', error);
+      }
+    } else {
+      // ถ้าไม่ได้ในช่วงเวลาที่อนุญาตให้กดบัตร
+      console.log('ไม่ได้ในช่วงเวลาที่อนุญาตให้กดบัตร');
+    }
+  };
+
 
   console.log(Username);
   const selectedConcert = concertData.find(concert => concert.id === concertId);
@@ -121,9 +156,7 @@ const ConcertInfoPage = () => {
           </img>
           <div className="container" id="ticketLine">
             <h2 id="concertTicket">{selectedConcert?.Start}</h2>
-            <Link to="/loading">
-              <button type="button" id="btn1">GET TICKETS</button>
-            </Link>
+              <button type="button" id="btn1" onClick={() => handleGetTicketsClick(UserID, 1, conName)}>GET TICKETS</button>
           </div>
           <div className="container" id="lineContainer">
             <h2 id="text1">รายละเอียด</h2>
