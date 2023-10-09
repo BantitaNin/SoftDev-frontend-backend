@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import { UserData } from "../../Pages/Interface";
 
-export const hookupUrl = ""; {/* https://cors-anywhere.herokuapp.com/ */}
+const hookupUrl = "https://cors-anywhere.herokuapp.com/";
 
 // import { useCookies } from "react-cookie";
 
@@ -23,8 +23,6 @@ export let Username = "";
 export let UserID = "";
 
 const Navbar = () => {
-
-
   // เพิ่ม state สำหรับตรวจสอบสถานะการเข้าสู่ระบบ
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -99,20 +97,16 @@ const Navbar = () => {
       console.log(role);
 
       if (role === "user") {
-        
         setIsLoggedInUser(true);
       } else if (role === "worker" || role === "hiring") {
         setIsLoggedInWorker(true);
-
       }
 
       FindUsernameByID(user_id);
     } else {
-
       setIsLoggedIn(false);
       setIsLoggedInUser(false);
       setIsLoggedInWorker(false);
-
     }
   };
 
@@ -144,7 +138,11 @@ const Navbar = () => {
     };
 
     try {
-      const response: AxiosResponse<LoginResponse> = await axios.post<LoginResponse>(hookupUrl+  dbURL + "auth/login",requestBody);
+      const response: AxiosResponse<LoginResponse> =
+        await axios.post<LoginResponse>(
+          hookupUrl+  dbURL + "auth/login",
+          requestBody
+        );
 
       // Handle the successful login response
       var { access_token, role, user_id } = response.data;
@@ -195,8 +193,6 @@ const Navbar = () => {
 
       localStorage.setItem("Username", Username);
       localStorage.setItem("Id", UserID);
-
-      window.location.href = 'http://localhost:3000/';
 
       // You can also perform actions such as setting the user's token in state or redirecting the user to another page
     } catch (error) {
@@ -252,7 +248,7 @@ const Navbar = () => {
     const BalanceCheck = async () => {
       console.log("Balance is showed");
       const requestBody = {
-        id: Number(UserID),
+        id: Number(user_id),
       };
 
       try {
@@ -417,7 +413,7 @@ const Navbar = () => {
                 /* When logged in, display these icons */
                 <>
                   <IconButton style={iconStyle}>
-                  {Username}
+                  
                     {/* แสดง Username ที่ได้รับจากการเข้าสู่ระบบ */}
                   </IconButton>
 
@@ -457,7 +453,7 @@ const Navbar = () => {
                   </IconButton>
                   <IconButton
                     style={iconStyle}
-                    onClick={handlenotiClick}
+                    onMouseEnter={handlenotiClick}
                     onMouseLeave={handleNonotiClick}
                   >
                     <svg
@@ -522,7 +518,7 @@ const Navbar = () => {
 
                   <IconButton
                     style={iconStyle}
-                    onClick={handlenotiClick}
+                    onMouseEnter={handlenotiClick}
                     onMouseLeave={handleNonotiClick}
                   >
                     <svg
@@ -620,6 +616,7 @@ const Navbar = () => {
           <BalanceModal
             iconClose="Pics/icon_close.png"
             handleModalClose={handleModalClose} // ตรวจสอบว่าส่งฟังก์ชันนี้ไปยัง BalanceModal หรือไม่
+            user_id={""}
             Balance={showBalance}
             BalanceCheck={BalanceCheck}
           />

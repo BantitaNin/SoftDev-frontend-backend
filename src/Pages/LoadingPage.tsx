@@ -5,10 +5,7 @@ import '../Components/CSS/LoadingPage.css';
 import GetTicketComponent from '../Components/LoadingComponent/GetTicketComponent';
 import FailTicketComponent from '../Components/LoadingComponent/FailTicketComponent';
 
-interface LoadingPageProps {
-  ticketStatus: boolean;
-}
-const LoadingPage: React.FC<LoadingPageProps> = ({ ticketStatus }) => {
+const LoadingPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -21,21 +18,12 @@ const LoadingPage: React.FC<LoadingPageProps> = ({ ticketStatus }) => {
     };
   }, []);
 
-
-  const showResult = () => {
-    if (ticketStatus === true) {
-      return <GetTicketComponent isLoading={!isLoading} />;
-    } else {
-      return <FailTicketComponent isLoading={!isLoading} />;
-    }
-  };
-
   return (
     <div>
         <div className="LoadingPage">
         <LoadingComponent isLoading={isLoading} />
-        
-        {showResult()}
+        {/* <GetTicketComponent isLoading={!isLoading} /> */}
+        <FailTicketComponent isLoading={!isLoading} />
         </div>
     </div>
   );

@@ -75,7 +75,7 @@ export const PayingModal = ({
               </div>
             </div>
             <button className="button">
-              <div className="text-wrapper-8" onClick={handleMoneyTransaction}>จ่ายเงิน</div>
+              <div className="text-wrapper-8" onClick={handleMoneyTransaction}>ถอนเงิน</div>
             </button>
           </div>
         </div>
